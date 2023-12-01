@@ -1,4 +1,4 @@
-package com.kevinfre.capstone_project
+package com.littlegrow.capstone_project
 
 import org.junit.Test
 

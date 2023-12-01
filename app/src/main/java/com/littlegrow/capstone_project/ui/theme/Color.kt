@@ -1,4 +1,4 @@
-package com.kevinfre.capstone_project.ui.theme
+package com.littlegrow.capstone_project.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
