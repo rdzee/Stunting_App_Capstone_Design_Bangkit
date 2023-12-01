@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Capstone_Project</string>
+
+    <!-- Body Mass Index -->
+    <string name="bmi">Body Mass Index</string>
+
+    <!-- Feature Name -->
+    <string name="features">Features</string>
+    <string name="feature_recommendation">Recommendation</string>
+
+    <!-- Information -->
+    <string name="information">Health Information</string>
 </resources>
