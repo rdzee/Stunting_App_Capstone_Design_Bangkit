@@ -6,7 +6,7 @@
     <string name="input_data">Please Enter Your Child`s Data</string>
 
     <!-- Validation -->
-        <string name="success">Success</string>
+    <string name="success">Success</string>
 
     <!-- Input Data Screen -->
     <string name="name">Name</string>
@@ -25,6 +25,10 @@
     <string name="birthDistance_hint">For Those Who Already Have Children</string>
     <string name="gender">Gender</string>
     <string name="name_cannot_null">Field Cannot be Empty</string>
+
+    <!-- Login -->
+    <string name="login_google">Sign In with Google</string>
+    <string name="login_warning">Failed To Login</string>
 
     <!-- Body Mass Index -->
     <string name="bmi">Body Mass Index</string>
