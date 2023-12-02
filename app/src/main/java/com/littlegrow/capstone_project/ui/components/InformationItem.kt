@@ -1,6 +1,5 @@
 package com.littlegrow.capstone_project.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
@@ -12,13 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.littlegrow.capstone_project.R
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 
 @Composable
@@ -33,11 +33,11 @@ fun InformationItem(
     ) {
         AsyncImage(
             model = articleImage,
+            placeholder = painterResource(id = R.drawable.article_placeholder),
             contentDescription = null,
             modifier = Modifier
                 .aspectRatio(26f/15f)
                 .clip(RoundedCornerShape(10.dp))
-                .background(Color.LightGray)
         )
         Text(
             text = articleTitle,
