@@ -26,6 +26,7 @@ import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 
 @Composable
 fun InputHeaderItem(
+    title: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -44,7 +45,7 @@ fun InputHeaderItem(
                 .size(26.dp)
         )
         Text(
-            text = stringResource(id = R.string.input_data),
+            text = title,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Medium,
@@ -59,6 +60,7 @@ fun InputHeaderItem(
 fun InputHeaderItemPreview() {
     Capstone_ProjectTheme {
         InputHeaderItem(
+            "Back",
             onBackClick = {}
         )
     }

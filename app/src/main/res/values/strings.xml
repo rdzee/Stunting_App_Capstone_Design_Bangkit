@@ -6,28 +6,34 @@
 
     <!--Greeting-->
     <string name="welcome">Welcome!</string>
-    <string name="input_data">Please Enter Your Child`s Data</string>
+    <string name="input_data">Silahkan Masukan Data Anak Anda</string>
 
     <!-- Validation -->
-    <string name="success">Success</string>
+    <string name="success">Berhasil</string>
 
     <!-- Input Data Screen -->
-    <string name="name">Name</string>
-    <string name="name_hint">Child`s Name</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="weight">Weight (Kg)</string>
-    <string name="weight_hint">Child`s Weight</string>
-    <string name="height">Height (Cm)</string>
-    <string name="height_hint">Child`s Height</string>
-    <string name="age">Age</string>
-    <string name="age_hint">Child`s Age</string>
-    <string name="disesaseHistory">Disease History</string>
-    <string name="disesaseHistory_hint">Child`s Disease History</string>
-    <string name="birthDistance">Birth Distance</string>
-    <string name="birthDistance_hint">For Those Who Already Have Children</string>
-    <string name="gender">Gender</string>
-    <string name="name_cannot_null">Field Cannot be Empty</string>
+    <string name="name">Nama Lengkap</string>
+    <string name="name_hint">Nama Anak</string>
+    <string name="male">Laki - laki</string>
+    <string name="female">Perempuan</string>
+    <string name="weight">Berat (Kg)</string>
+    <string name="weight_hint">Berat Anak</string>
+    <string name="height">Tinggi (Cm)</string>
+    <string name="height_hint">Tinggi Anak</string>
+    <string name="age">Umur</string>
+    <string name="age_hint">Umur Anak</string>
+    <string name="disesaseHistory">Riwayat Penyakit</string>
+    <string name="disesaseHistory_hint">Riwayat Penyakit Anak</string>
+    <string name="birthDistance">Jarak Kelahiran</string>
+    <string name="birthDistance_hint">Untuk Ibu yang Sudah Memiliki Anak</string>
+    <string name="gender">Jenis Kelamin</string>
+    <string name="name_cannot_null">Data Harus Diisi</string>
+
+    <!--Recommendation Screen-->
+    <string name="recommendation">Rekomendasi Gizi</string>
+    <string name="calorie">Kalori</string>
+    <string name="protein">Protein</string>
+    <string name="vitamin">Vitamin</string>
 
     <!-- Login / Logout -->
     <string name="login_google">Sign In with Google</string>
