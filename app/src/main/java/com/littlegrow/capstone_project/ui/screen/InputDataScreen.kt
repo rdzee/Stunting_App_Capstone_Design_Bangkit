@@ -24,14 +24,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.littlegrow.capstone_project.R
 import com.littlegrow.capstone_project.model.InputEvent
 import com.littlegrow.capstone_project.model.ValidationEvent
-import com.littlegrow.capstone_project.ui.components.RadioButtonItem
-import com.littlegrow.capstone_project.ui.components.TextInputItem
-import com.littlegrow.capstone_project.ui.components.WelcomeItem
+import com.littlegrow.capstone_project.ui.components.item.InputHeaderItem
+import com.littlegrow.capstone_project.ui.components.item.RadioButtonItem
+import com.littlegrow.capstone_project.ui.components.item.TextInputItem
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 import com.littlegrow.capstone_project.ui.viewmodel.InputDataViewModel
 
 @Composable
 fun InputDataScreen(
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     inputDataViewModel: InputDataViewModel = viewModel()
 ) {
@@ -54,7 +55,9 @@ fun InputDataScreen(
         modifier = Modifier.padding(8.dp)
     ) {
         item {
-            WelcomeItem()
+            InputHeaderItem(
+                onBackClick = onBackClick
+            )
             TextInputItem(
                 text = stringResource(id = R.string.name),
                 hint = stringResource(id = R.string.name_hint),
@@ -71,6 +74,7 @@ fun InputDataScreen(
             TextInputItem(
                 text = stringResource(id = R.string.weight),
                 hint = stringResource(id = R.string.weight_hint),
+                keyboardType = KeyboardType.Number,
                 onTextChanged = { inputDataViewModel.onEvent(InputEvent.WeightChanged(it)) },
                 isError = state.weightError,
                 onNext = { localFocus.moveFocus(FocusDirection.Down) },
@@ -79,6 +83,7 @@ fun InputDataScreen(
             TextInputItem(
                 text = stringResource(id = R.string.height),
                 hint = stringResource(id = R.string.height_hint),
+                keyboardType = KeyboardType.Number,
                 onTextChanged = { inputDataViewModel.onEvent(InputEvent.HeightChanged(it)) },
                 isError = state.heightError,
                 onNext = { localFocus.moveFocus(FocusDirection.Down) },
@@ -127,6 +132,8 @@ fun InputDataScreen(
 @Preview(showBackground = true)
 fun InputDataScreenPreview() {
     Capstone_ProjectTheme {
-        InputDataScreen()
+        InputDataScreen(
+            onBackClick = {}
+        )
     }
 }

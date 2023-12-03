@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="light_blue">#87b1d7</color>
-    <color name="green">#3dd365</color>
-    <color name="yellow">#eee133</color>
-    <color name="orange">#fd802e</color>
-    <color name="red">#f95353</color>
+    <color name="light_blue">#87b1d7</color> // Under Weight
+    <color name="green">#3dd365</color> // Normal
+    <color name="yellow">#eee133</color> // Overweight
+    <color name="orange">#fd802e</color> // Obese
+    <color name="red">#f95353</color> // Extremely Obese
 </resources>

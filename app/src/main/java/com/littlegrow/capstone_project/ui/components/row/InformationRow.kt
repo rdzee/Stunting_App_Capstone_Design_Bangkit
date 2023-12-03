@@ -1,4 +1,4 @@
-package com.littlegrow.capstone_project.ui.components
+package com.littlegrow.capstone_project.ui.components.row
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.littlegrow.capstone_project.ui.components.item.InformationItem
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 
 @Composable
@@ -20,6 +21,7 @@ fun InformationRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier
     ) {
+        // TODO : Change Article List With Model and Add Key
         items(articleList) {article ->
             InformationItem(
                 articleImage = "",

@@ -12,6 +12,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.littlegrow.capstone_project.navigation.Screen
 import com.littlegrow.capstone_project.ui.screen.HomeScreen
+import com.littlegrow.capstone_project.ui.screen.InputDataScreen
 import com.littlegrow.capstone_project.ui.screen.LoginScreen
 
 @Composable
@@ -30,7 +31,21 @@ fun CapstoneApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(
+                    navigateToDetail = {
+                        navController.navigate(Screen.Detail.route)
+                    },
+                    navigateToAdd = {
+                        navController.navigate(Screen.Add.route)
+                    },
+                    navigateToLogin = {
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(0) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
             }
             composable(Screen.Login.route) {
                 LoginScreen(
@@ -40,6 +55,14 @@ fun CapstoneApp(
                                 inclusive = true
                             }
                         }
+                    }
+                )
+            }
+
+            composable(Screen.Add.route) {
+                InputDataScreen(
+                    onBackClick = {
+                        navController.navigateUp()
                     }
                 )
             }

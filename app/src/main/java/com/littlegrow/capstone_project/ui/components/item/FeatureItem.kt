@@ -1,4 +1,4 @@
-package com.littlegrow.capstone_project.ui.components
+package com.littlegrow.capstone_project.ui.components.item
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +30,7 @@ fun FeatureItem(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
             .shadow(10.dp, shape = RoundedCornerShape(10.dp))
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(color = Color.LightGray)
             .size(100.dp)
             .padding(vertical = 8.dp)
     ) {
@@ -38,6 +38,7 @@ fun FeatureItem(
             text = featureName,
             textAlign = TextAlign.Center,
             fontSize = 10.sp,
+            color = Color.DarkGray,
             modifier = Modifier
         )
     }

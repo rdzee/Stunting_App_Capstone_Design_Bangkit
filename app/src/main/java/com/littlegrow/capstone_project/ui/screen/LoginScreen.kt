@@ -10,8 +10,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +40,7 @@ fun LoginScreen(
 ) {
     val auth = Firebase.auth
     val signInRequestCode = 1
+    var loading by remember { mutableStateOf(false) }
 
     val resultLauncher =
         rememberLauncherForActivityResult(contract = AuthResultContract()) { task ->
@@ -50,6 +56,7 @@ fun LoginScreen(
                                 Log.w("LoginScreen", authResult.exception)
                                 Toast.makeText(context, context.getString(R.string.login_warning), Toast.LENGTH_SHORT).show()
                             }
+                            loading = false
                         }
                 }
             } catch (e: ApiException) {
@@ -59,14 +66,17 @@ fun LoginScreen(
         }
 
     LoginContent(
+        loading = loading,
         onClick = {
             resultLauncher.launch(signInRequestCode)
+            loading = true
         }
     )
 }
 
 @Composable
 fun LoginContent(
+    loading: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -77,7 +87,8 @@ fun LoginContent(
         Button(
             onClick = onClick,
             modifier = Modifier
-                .align(Alignment.Center)
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 128.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.google_logo),
@@ -87,6 +98,13 @@ fun LoginContent(
                 text = stringResource(id = R.string.login_google),
                 modifier = Modifier
                     .padding(start = 8.dp)
+            )
+        }
+
+        if (loading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center)
             )
         }
     }
@@ -99,6 +117,7 @@ fun LoginContent(
 fun LoginScreenPreview() {
     Capstone_ProjectTheme {
         LoginContent(
+            loading = true,
             onClick = {}
         )
     }
