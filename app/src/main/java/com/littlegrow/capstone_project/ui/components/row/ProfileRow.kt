@@ -16,8 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.littlegrow.capstone_project.R
 import com.littlegrow.capstone_project.ui.components.item.AddProfileItem
 import com.littlegrow.capstone_project.ui.components.item.ProfileItem
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
@@ -49,10 +51,10 @@ fun ProfileRow(
             } else {
                 ProfileItem(
                     name = "John Doe",
-                    age = "2 year(s) 11 month(s)",
-                    gender = "Male",
-                    weight = "10 Kg",
-                    height = "80 Cm",
+                    age = stringResource(id = R.string.age_display, 2, 11),
+                    gender = "Laki - Laki",
+                    weight = stringResource(id = R.string.weight_display, 10),
+                    height = stringResource(id = R.string.height_display, 80),
                     bmiResult = "Normal",
                     bmiIndex = "15.6",
                     onClick = navigateToDetail

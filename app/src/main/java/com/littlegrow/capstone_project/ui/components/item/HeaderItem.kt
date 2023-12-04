@@ -25,7 +25,7 @@ import com.littlegrow.capstone_project.R
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 
 @Composable
-fun InputHeaderItem(
+fun HeaderItem(
     title: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -59,7 +59,7 @@ fun InputHeaderItem(
 @Preview(showBackground = true)
 fun InputHeaderItemPreview() {
     Capstone_ProjectTheme {
-        InputHeaderItem(
+        HeaderItem(
             "Back",
             onBackClick = {}
         )

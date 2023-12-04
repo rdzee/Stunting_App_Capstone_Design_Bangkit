@@ -45,6 +45,7 @@ import coil.compose.AsyncImage
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.littlegrow.capstone_project.R
+import com.littlegrow.capstone_project.model.FeatureData
 import com.littlegrow.capstone_project.ui.components.row.FeatureRow
 import com.littlegrow.capstone_project.ui.components.row.InformationRow
 import com.littlegrow.capstone_project.ui.components.row.ProfileRow
@@ -56,17 +57,35 @@ fun HomeScreen(
     navigateToDetail: () -> Unit,
     navigateToAdd: () -> Unit,
     navigateToLogin: () -> Unit,
+    navigateToChooseProfile: (String) -> Unit,
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
 ) {
     val auth = Firebase.auth
     var expanded by remember { mutableStateOf(false) }
 
+    val listFeature: List<FeatureData> = listOf(
+        FeatureData(
+            id = "F1",
+            featureName = stringResource(id = R.string.feature_recommendation)
+        ),
+        FeatureData(
+            id = "F2",
+            featureName = "?"
+        ),
+        FeatureData(
+            id = "F3",
+            featureName = "?"
+        )
+    )
+
     HomeContent(
         image = auth.currentUser?.photoUrl,
         email = auth.currentUser?.email,
+        listFeature = listFeature,
         expanded = expanded,
-        setExpanded = { expanded = !expanded },
+        setExpanded = { expanded = it },
+        navigateToChooseProfile = navigateToChooseProfile,
         navigateToDetail = navigateToDetail,
         navigateToAdd = navigateToAdd,
         navigateToLogin = {
@@ -84,7 +103,9 @@ fun HomeContent(
     image: Uri?,
     email: String?,
     expanded: Boolean,
+    listFeature: List<FeatureData>,
     setExpanded: (Boolean) -> Unit,
+    navigateToChooseProfile: (String) -> Unit,
     navigateToDetail: () -> Unit,
     navigateToAdd: () -> Unit,
     navigateToLogin: () -> Unit,
@@ -97,7 +118,7 @@ fun HomeContent(
                 actions = {
                     IconButton(
                         onClick = {
-                            setExpanded(expanded)
+                            setExpanded(!expanded)
                         },
                     ) {
                         Icon(
@@ -199,11 +220,8 @@ fun HomeContent(
             )
 
             FeatureRow(
-                featureList = listOf(
-                    "Recommendation",
-                    "?",
-                    "?"
-                ),
+                featureList = listFeature,
+                navigateToChooseProfile = navigateToChooseProfile,
                 modifier = Modifier
                     .constrainAs(featureRowRef) {
                         top.linkTo(featureRef.bottom, 16.dp)
@@ -250,9 +268,24 @@ fun HomeContentPreview() {
         HomeContent(
             email = "",
             image = "".toUri(),
+            listFeature = listOf(
+                FeatureData(
+                    id = "",
+                    featureName = stringResource(id = R.string.feature_recommendation)
+                ),
+                FeatureData(
+                    id = "",
+                    featureName = "?"
+                ),
+                FeatureData(
+                    id = "",
+                    featureName = "?"
+                )
+            ),
             navigateToDetail = {},
             navigateToAdd = {},
             navigateToLogin = {},
+            navigateToChooseProfile = {},
             setExpanded = {},
             expanded = false,
         )

@@ -1,6 +1,7 @@
 package com.littlegrow.capstone_project.ui.components.item
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -22,7 +23,9 @@ import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 
 @Composable
 fun FeatureItem(
+    featureId: String,
     featureName: String,
+    navigateToChooseProfile: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -33,6 +36,9 @@ fun FeatureItem(
             .background(color = Color.LightGray)
             .size(100.dp)
             .padding(vertical = 8.dp)
+            .clickable {
+                navigateToChooseProfile(featureId)
+            }
     ) {
         Text(
             text = featureName,
@@ -51,7 +57,9 @@ fun FeatureItem(
 fun FeatureItemPreview() {
     Capstone_ProjectTheme {
         FeatureItem(
-            stringResource(id = R.string.feature_recommendation)
+            featureId = "",
+            navigateToChooseProfile = {},
+            featureName = stringResource(id = R.string.feature_recommendation)
         )
     }
 }

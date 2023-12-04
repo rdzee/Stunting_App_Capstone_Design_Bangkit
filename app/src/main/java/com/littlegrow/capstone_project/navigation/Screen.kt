@@ -7,4 +7,11 @@ sealed class Screen(val route: String) {
     data object Detail: Screen("detail")
 
     data object Add: Screen("add")
+
+    data object Recommendation: Screen("recommendation")
+
+    data object ChooseProfile: Screen("chooseProfile/{featureId}") {
+        fun createRoute(featureId: String) = "chooseProfile/$featureId"
+    }
+
 }

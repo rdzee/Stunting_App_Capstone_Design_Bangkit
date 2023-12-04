@@ -2,7 +2,10 @@
     <string name="app_name">Little Grow</string>
 
     <!-- Basic -->
-    <string name="back">Back</string>
+    <string name="back">Kembali</string>
+    <string name="age_display">%s tahun %s bulan</string>
+    <string name="weight_display">%s Kg</string>
+    <string name="height_display">%s Cm</string>
 
     <!--Greeting-->
     <string name="welcome">Welcome!</string>
@@ -35,25 +38,41 @@
     <string name="protein">Protein</string>
     <string name="vitamin">Vitamin</string>
 
+    <!-- Detail Screen -->
+    <string name="edit_data">Edit</string>
+    <string name="delete_data">Hapus</string>
+    <string name="save_data">Simpan</string>
+    <string name="close_edit">Tutup</string>
+    <string name="add_disease_hint">Tambah Riwayat Penyakit</string>
+    <string name="add_disease">Tambah</string>
+
+    <!-- Choose Profile Screen -->
+    <string name="choose_screen">Pilih Profil</string>
+
+    <!-- Delete Dialog -->
+    <string name="delete_title">Hapus Profil</string>
+    <string name="delete_warning">Profil akan dihapus secara permanen dan tidak dapat dipulihkan.</string>
+    <string name="cancel">Batal</string>
+
     <!-- Login / Logout -->
-    <string name="login_google">Sign In with Google</string>
-    <string name="login_warning">Failed To Login</string>
-    <string name="logout">Sign Out</string>
+    <string name="login_google">Masuk dengan Google</string>
+    <string name="login_warning">Gagal untuk Masuk</string>
+    <string name="logout">Keluar</string>
     <string name="email">Email</string>
 
     <!-- Google Profile -->
     <string name="profile">Profile</string>
 
     <!-- Profile Data Row -->
-    <string name="bmi">BMI</string>
-    <string name="data_Weight">Weight</string>
-    <string name="data_Height">Height</string>
-    <string name="add_new_data">Add New Data</string>
+    <string name="bmi">IMT</string>
+    <string name="data_Weight">Berat</string>
+    <string name="data_Height">Tinggi</string>
+    <string name="add_new_data">Tambah Profil Baru</string>
 
     <!-- Feature Name -->
-    <string name="features">Features</string>
-    <string name="feature_recommendation">Recommendation</string>
+    <string name="features">Fitur</string>
+    <string name="feature_recommendation">Rekomendasi</string>
 
     <!-- Information -->
-    <string name="information">Health Information</string>
+    <string name="information">Informasi Kesehatan</string>
 </resources>

@@ -5,15 +5,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.littlegrow.capstone_project.navigation.Screen
+import com.littlegrow.capstone_project.ui.screen.ChooseProfileScreen
+import com.littlegrow.capstone_project.ui.screen.DetailScreen
 import com.littlegrow.capstone_project.ui.screen.HomeScreen
 import com.littlegrow.capstone_project.ui.screen.InputDataScreen
 import com.littlegrow.capstone_project.ui.screen.LoginScreen
+import com.littlegrow.capstone_project.ui.screen.RecommendationScreen
+import com.littlegrow.capstone_project.util.FEATURE_ID
 
 @Composable
 fun CapstoneApp(
@@ -32,18 +38,21 @@ fun CapstoneApp(
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
-                    navigateToDetail = {
-                        navController.navigate(Screen.Detail.route)
-                    },
-                    navigateToAdd = {
-                        navController.navigate(Screen.Add.route)
-                    },
                     navigateToLogin = {
                         navController.navigate(Screen.Login.route) {
                             popUpTo(0) {
                                 inclusive = true
                             }
                         }
+                    },
+                    navigateToDetail = {
+                        navController.navigate(Screen.Detail.route)
+                    },
+                    navigateToAdd = {
+                        navController.navigate(Screen.Add.route)
+                    },
+                    navigateToChooseProfile = { featureId ->
+                        navController.navigate(Screen.ChooseProfile.createRoute(featureId))
                     }
                 )
             }
@@ -59,6 +68,14 @@ fun CapstoneApp(
                 )
             }
 
+            composable(Screen.Detail.route) {
+                DetailScreen(
+                    onBackClick = {
+                        navController.navigateUp()
+                    }
+                )
+            }
+
             composable(Screen.Add.route) {
                 InputDataScreen(
                     onBackClick = {
@@ -66,6 +83,35 @@ fun CapstoneApp(
                     }
                 )
             }
+
+            composable(
+                route = Screen.ChooseProfile.route,
+                arguments = listOf(navArgument(FEATURE_ID) {
+                    type = NavType.StringType
+                })
+            ) {
+                val id = it.arguments?.getString(FEATURE_ID) ?: ""
+                ChooseProfileScreen(
+                    featureId = id,
+                    navigateToRecommendation = {
+                        navController.navigate(Screen.Recommendation.route)
+                    },
+                    navigateToFeature2 = {},
+                    navigateToFeature3 = {},
+                    onBackClick = {
+                        navController.navigateUp()
+                    }
+                )
+            }
+
+            composable(Screen.Recommendation.route) {
+                RecommendationScreen(
+                    onBackClick = {
+                        navController.navigateUp()
+                    }
+                )
+            }
+
         }
     }
 }

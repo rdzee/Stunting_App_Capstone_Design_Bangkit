@@ -24,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.littlegrow.capstone_project.R
 import com.littlegrow.capstone_project.model.InputEvent
 import com.littlegrow.capstone_project.model.ValidationEvent
-import com.littlegrow.capstone_project.ui.components.item.InputHeaderItem
+import com.littlegrow.capstone_project.ui.components.item.HeaderItem
 import com.littlegrow.capstone_project.ui.components.item.RadioButtonItem
 import com.littlegrow.capstone_project.ui.components.item.TextInputItem
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
@@ -55,7 +55,8 @@ fun InputDataScreen(
         modifier = Modifier.padding(8.dp)
     ) {
         item {
-            InputHeaderItem(
+            HeaderItem(
+                title = stringResource(id = R.string.input_data),
                 onBackClick = onBackClick
             )
             TextInputItem(
@@ -119,7 +120,8 @@ fun InputDataScreen(
                 onClick = {
                     inputDataViewModel.onEvent(InputEvent.Submit)
                 },
-                modifier.padding(16.dp)
+                modifier
+                    .padding(16.dp)
                     .fillMaxWidth()
             ) {
                 Text("Submit")
