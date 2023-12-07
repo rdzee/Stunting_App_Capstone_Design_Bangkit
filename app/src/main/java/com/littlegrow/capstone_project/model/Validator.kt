@@ -14,8 +14,8 @@ object Validator {
         return ValidationResult(height.isNotEmpty())
     }
 
-    fun validateAge(age: Int): ValidationResult {
-        return ValidationResult(age != 0)
+    fun validateBirthDate(birthDate: Long): ValidationResult {
+        return ValidationResult(birthDate != 0L)
     }
 
     fun validateDiseaseHistory(diseaseHistory: String): ValidationResult {

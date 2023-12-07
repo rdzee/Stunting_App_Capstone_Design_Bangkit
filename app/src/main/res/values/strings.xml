@@ -3,6 +3,7 @@
 
     <!-- Basic -->
     <string name="back">Kembali</string>
+    <string name="okay">Oke</string>
     <string name="age_display">%s tahun %s bulan</string>
     <string name="weight_display">%s Kg</string>
     <string name="height_display">%s Cm</string>
@@ -23,7 +24,7 @@
     <string name="weight_hint">Berat Anak</string>
     <string name="height">Tinggi (Cm)</string>
     <string name="height_hint">Tinggi Anak</string>
-    <string name="age">Umur</string>
+    <string name="birth_date">Tanggal Lahir</string>
     <string name="age_hint">Umur Anak</string>
     <string name="disesaseHistory">Riwayat Penyakit</string>
     <string name="disesaseHistory_hint">Riwayat Penyakit Anak</string>
@@ -40,6 +41,7 @@
 
     <!-- Detail Screen -->
     <string name="edit_data">Edit</string>
+    <string name="age">Umur</string>
     <string name="delete_data">Hapus</string>
     <string name="save_data">Simpan</string>
     <string name="close_edit">Tutup</string>

@@ -4,12 +4,14 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.littlegrow.capstone_project.model.InputEvent
 import com.littlegrow.capstone_project.model.InputData
+import com.littlegrow.capstone_project.model.InputEvent
 import com.littlegrow.capstone_project.model.ValidationEvent
 import com.littlegrow.capstone_project.model.Validator
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class InputDataViewModel : ViewModel() {
     private var _uiState = mutableStateOf(InputData())
@@ -37,10 +39,11 @@ class InputDataViewModel : ViewModel() {
                 )
             }
 
-            is InputEvent.AgeChanged -> {
+            is InputEvent.BirthDateChanged -> {
                 _uiState.value = _uiState.value.copy(
-                    age = event.age
+                    birthDate = event.birthDate
                 )
+                _formattedDate.value = dateFormat.format(event.birthDate)
             }
 
             is InputEvent.DiseaseHistoryChanged -> {
@@ -65,7 +68,7 @@ class InputDataViewModel : ViewModel() {
         val nameResult = Validator.validateName(_uiState.value.name)
         val weightResult = Validator.validateWeight(_uiState.value.weight)
         val heightResult = Validator.validateHeight(_uiState.value.height)
-        val ageResult = Validator.validateAge(_uiState.value.age)
+        val birthDateResult = Validator.validateBirthDate(_uiState.value.birthDate)
         val diseaseHistoryResult = Validator.validateDiseaseHistory(_uiState.value.diseaseHistory)
         val birthDistanceResult = Validator.validateBirthDistance(_uiState.value.birthDistance)
 
@@ -73,7 +76,7 @@ class InputDataViewModel : ViewModel() {
             nameError = !nameResult.status,
             weightError = !weightResult.status,
             heightError = !heightResult.status,
-            ageError = !ageResult.status,
+            birthDateError = !birthDateResult.status,
             diseaseHistoryError = !diseaseHistoryResult.status,
             birthDistanceError = !birthDistanceResult.status,
         )
@@ -82,7 +85,7 @@ class InputDataViewModel : ViewModel() {
             nameResult,
             weightResult,
             heightResult,
-            ageResult,
+            birthDateResult,
             diseaseHistoryResult,
             birthDistanceResult
         ).any { !it.status }
@@ -93,4 +96,9 @@ class InputDataViewModel : ViewModel() {
             }
         }
     }
+
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val _formattedDate = mutableStateOf("")
+    val formattedDate
+        get() = _formattedDate
 }
