@@ -1,4 +1,4 @@
-package com.littlegrow.capstone_project.ui.screen
+package com.littlegrow.capstone_project.ui.screen.choose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

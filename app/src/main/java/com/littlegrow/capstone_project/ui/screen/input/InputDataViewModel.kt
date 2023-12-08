@@ -1,4 +1,4 @@
-package com.littlegrow.capstone_project.ui.viewmodel
+package com.littlegrow.capstone_project.ui.screen.input
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

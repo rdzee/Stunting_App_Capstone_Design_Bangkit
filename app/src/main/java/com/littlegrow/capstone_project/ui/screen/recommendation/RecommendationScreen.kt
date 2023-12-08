@@ -1,4 +1,4 @@
-package com.littlegrow.capstone_project.ui.screen
+package com.littlegrow.capstone_project.ui.screen.recommendation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

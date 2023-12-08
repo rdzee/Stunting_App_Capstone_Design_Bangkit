@@ -13,12 +13,12 @@ import androidx.navigation.navArgument
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.littlegrow.capstone_project.navigation.Screen
-import com.littlegrow.capstone_project.ui.screen.ChooseProfileScreen
-import com.littlegrow.capstone_project.ui.screen.DetailScreen
-import com.littlegrow.capstone_project.ui.screen.HomeScreen
-import com.littlegrow.capstone_project.ui.screen.InputDataScreen
-import com.littlegrow.capstone_project.ui.screen.LoginScreen
-import com.littlegrow.capstone_project.ui.screen.RecommendationScreen
+import com.littlegrow.capstone_project.ui.screen.choose.ChooseProfileScreen
+import com.littlegrow.capstone_project.ui.screen.detail.DetailScreen
+import com.littlegrow.capstone_project.ui.screen.home.HomeScreen
+import com.littlegrow.capstone_project.ui.screen.input.InputDataScreen
+import com.littlegrow.capstone_project.ui.screen.login.LoginScreen
+import com.littlegrow.capstone_project.ui.screen.recommendation.RecommendationScreen
 import com.littlegrow.capstone_project.util.FEATURE_ID
 
 @Composable

@@ -1,7 +1,9 @@
-package com.littlegrow.capstone_project.ui.screen
+package com.littlegrow.capstone_project.ui.screen.home
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +25,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,14 +45,19 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.net.toUri
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.littlegrow.capstone_project.R
+import com.littlegrow.capstone_project.data.local.database.Information
+import com.littlegrow.capstone_project.di.Injection
 import com.littlegrow.capstone_project.model.FeatureData
 import com.littlegrow.capstone_project.ui.components.row.FeatureRow
 import com.littlegrow.capstone_project.ui.components.row.InformationRow
 import com.littlegrow.capstone_project.ui.components.row.ProfileRow
+import com.littlegrow.capstone_project.ui.screen.Result
+import com.littlegrow.capstone_project.ui.screen.ViewModelFactory
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 import com.littlegrow.capstone_project.util.getGoogleSignInClient
 
@@ -60,9 +69,13 @@ fun HomeScreen(
     navigateToChooseProfile: (String) -> Unit,
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
+    viewModel: HomeViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepo(context))
+    )
 ) {
     val auth = Firebase.auth
     var expanded by remember { mutableStateOf(false) }
+    var listInformation: List<Information> = remember { mutableStateListOf() }
 
     val listFeature: List<FeatureData> = listOf(
         FeatureData(
@@ -79,10 +92,24 @@ fun HomeScreen(
         )
     )
 
+    viewModel.informationList.collectAsState().value.let {result ->
+        when(result) {
+            is Result.Loading -> viewModel.getAllInfo()
+            is Result.Success -> {
+                listInformation = result.data
+            }
+            is Result.Error -> {
+                Log.d("PopularMovies: ", result.error)
+                Toast.makeText(context, "HealthInformation: ${ result.error }", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     HomeContent(
         image = auth.currentUser?.photoUrl,
         email = auth.currentUser?.email,
         listFeature = listFeature,
+        listInformation = listInformation,
         expanded = expanded,
         setExpanded = { expanded = it },
         navigateToChooseProfile = navigateToChooseProfile,
@@ -104,6 +131,7 @@ fun HomeContent(
     email: String?,
     expanded: Boolean,
     listFeature: List<FeatureData>,
+    listInformation: List<Information>?,
     setExpanded: (Boolean) -> Unit,
     navigateToChooseProfile: (String) -> Unit,
     navigateToDetail: () -> Unit,
@@ -242,17 +270,16 @@ fun HomeContent(
                     }
             )
 
-            InformationRow(
-                articleList = listOf(
-                    "Pencegahan Stunting Pada Anak",
-                    "4 Cara Pencegahan Stunting"
-                ),
-                modifier = Modifier
-                    .constrainAs(informationRowRef) {
-                        start.linkTo(parent.start)
-                        top.linkTo(informationRef.bottom)
-                    }
-            )
+            if (listInformation != null) {
+                InformationRow(
+                    articleList = listInformation,
+                    modifier = Modifier
+                        .constrainAs(informationRowRef) {
+                            start.linkTo(parent.start)
+                            top.linkTo(informationRef.bottom)
+                        }
+                )
+            }
         }
     }
 }
@@ -280,6 +307,15 @@ fun HomeContentPreview() {
                 FeatureData(
                     id = "",
                     featureName = "?"
+                )
+            ),
+            listInformation = listOf(
+                Information(
+                    id = 1,
+                    articleImage = "",
+                    articleTitle = "10 Cara Mengatasi Stunting pada Anak, Orang Tua Wajib Tahu!",
+                    articleLink = "",
+                    articleSource = "genbest"
                 )
             ),
             navigateToDetail = {},

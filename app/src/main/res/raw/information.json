@@ -1,0 +1,39 @@
+{
+  "listInformation": [
+    {
+      "id": 1,
+      "image": "https://yankes.kemkes.go.id/img/bg-img/gambarartikel_1661498786_242330.jpg",
+      "title": "Mengenal Apa Itu Stunting",
+      "link": "https://yankes.kemkes.go.id/view_artikel/1388/mengenal-apa-itu-stunting",
+      "source": "Kementerian Kesehatan"
+    },
+    {
+      "id": 2,
+      "image": "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2022/10/05085825/X-Cara-Mengatasi-Masalah-Stunting-pada-Balita.jpg.webp",
+      "title": "4 Cara Mengatasi Masalah Stunting pada Balita",
+      "link": "https://www.halodoc.com/artikel/4-cara-mengatasi-masalah-stunting-pada-balita",
+      "source": "halodoc"
+    },
+    {
+      "id": 3,
+      "image": "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2023/02/22060206/X-Makanan-Bergizi-untuk-Cegah-Stunting-pada-Balita.jpg.webp",
+      "title": "7 Makanan Bergizi untuk Mencegah Stunting pada Balita",
+      "link": "https://www.halodoc.com/artikel/7-makanan-bergizi-untuk-mencegah-stunting-pada-balita",
+      "source": "halodoc"
+    },
+    {
+      "id": 4,
+      "image": "https://promkes.kemkes.go.id/imagex/content/4a26ad00leaflet-stunting.png",
+      "title": "Pencegahan Stunting Pada Anak",
+      "link": "https://promkes.kemkes.go.id/pencegahan-stunting",
+      "source": "Kementerian Kesehatan"
+    },
+    {
+      "id": 5,
+      "image": "https://genbest.id/images/article/shutterstock_1552968002_original_614.jpg?1655644805",
+      "title": "10 Cara Mengatasi Stunting pada Anak, Orang Tua Wajib Tahu!",
+      "link": "https://genbest.id/articles/cara-mengatasi-stunting-pada-anak-orang-tua-wajib-tahu",
+      "source": "Genbest"
+    }
+  ]
+}

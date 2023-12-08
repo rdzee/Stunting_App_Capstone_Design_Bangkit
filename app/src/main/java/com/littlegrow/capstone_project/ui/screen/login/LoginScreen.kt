@@ -1,4 +1,4 @@
-package com.littlegrow.capstone_project.ui.screen
+package com.littlegrow.capstone_project.ui.screen.login
 
 import android.app.Activity
 import android.content.Context

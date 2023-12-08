@@ -1,4 +1,4 @@
-package com.littlegrow.capstone_project.ui.screen
+package com.littlegrow.capstone_project.ui.screen.input
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -43,7 +43,6 @@ import com.littlegrow.capstone_project.ui.components.item.HeaderItem
 import com.littlegrow.capstone_project.ui.components.item.RadioButtonItem
 import com.littlegrow.capstone_project.ui.components.item.TextInputItem
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
-import com.littlegrow.capstone_project.ui.viewmodel.InputDataViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
