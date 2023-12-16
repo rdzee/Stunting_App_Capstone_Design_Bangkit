@@ -8,8 +8,13 @@
     <string name="weight_display">%s Kg</string>
     <string name="height_display">%s Cm</string>
 
-    <!--Greeting-->
-    <string name="welcome">Welcome!</string>
+    <!--Login Screen-->
+    <string name="welcome_1">Selamat</string>
+    <string name="welcome_2">Datang</string>
+    <string name="little_grow">LITTLE-Grow</string>
+    <string name="little_grow_1">Linear Improvement Tracking</string>
+    <string name="little_grow_2"> for Toddlers and Early Growth</string>
+    <string name="please_login">Silahkan Login Untuk Melanjutkan</string>
     <string name="input_data">Silahkan Masukan Data Anak Anda</string>
 
     <!-- Validation -->
