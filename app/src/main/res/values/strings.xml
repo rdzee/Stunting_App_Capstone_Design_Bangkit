@@ -72,13 +72,16 @@
 
     <!-- Profile Data Row -->
     <string name="bmi">IMT</string>
+    <string name="add_profile">Tambah / Ganti Profil</string>
+    <string name="detail">Detail</string>
     <string name="data_Weight">Berat</string>
     <string name="data_Height">Tinggi</string>
     <string name="add_new_data">Tambah Profil Baru</string>
 
     <!-- Feature Name -->
     <string name="features">Fitur</string>
-    <string name="feature_recommendation">Rekomendasi</string>
+    <string name="feature_recommendation">Rekomendasi Gizi</string>
+    <string name="feature_budget">Anggaran Makanan</string>
 
     <!-- Information -->
     <string name="information">Informasi Kesehatan</string>

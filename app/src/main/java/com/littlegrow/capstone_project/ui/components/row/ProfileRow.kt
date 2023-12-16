@@ -51,13 +51,13 @@ fun ProfileRow(
             } else {
                 ProfileItem(
                     name = "John Doe",
-                    age = stringResource(id = R.string.age_display, 2, 11),
                     gender = "Laki - Laki",
                     weight = stringResource(id = R.string.weight_display, 10),
                     height = stringResource(id = R.string.height_display, 80),
                     bmiResult = "Normal",
                     bmiIndex = "15.6",
-                    onClick = navigateToDetail
+                    navigateToDetail = navigateToDetail,
+                    navigateToAdd = navigateToAdd
                 )
             }
         }

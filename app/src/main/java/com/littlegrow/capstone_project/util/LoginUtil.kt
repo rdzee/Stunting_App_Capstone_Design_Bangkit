@@ -9,7 +9,7 @@ import com.littlegrow.capstone_project.R
 fun getGoogleSignInClient(context: Context): GoogleSignInClient {
     val gso = GoogleSignInOptions
         .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(context.getString(R.string.default_web_client_id))
+        .requestIdToken(context.getString(R.string.name))
         .requestProfile()
         .requestEmail()
         .build()

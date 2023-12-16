@@ -1,7 +1,6 @@
 package com.littlegrow.capstone_project.ui.components.item
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,49 +39,42 @@ import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 @Composable
 fun ProfileItem(
     name: String,
-    age: String,
     gender: String,
     weight: String,
     height: String,
     bmiResult: String,
     bmiIndex: String,
-    onClick: () -> Unit,
+    navigateToDetail: () -> Unit,
+    navigateToAdd: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
         modifier = modifier
-            .clip(RoundedCornerShape(10.dp))
-            .height(210.dp)
-            .clickable {
-                onClick()
-            }
+            .clip(RoundedCornerShape(30.dp))
+            .height(200.dp)
     ) {
         ConstraintLayout(
             modifier = Modifier.fillMaxSize()
         ) {
-            val (nameRef, ageRef, bmiResultRef, dataRowRef) = createRefs()
+            val (nameRef, bmiResultRef, dataRowRef, buttonRef) = createRefs()
             Text(
                 text = name,
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center,
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    shadow = Shadow(Color.Black, Offset(2f, 1f))
+                ),
                 modifier = Modifier
                     .constrainAs(nameRef) {
-                        start.linkTo(parent.start, 16.dp)
-                        end.linkTo(parent.end, 16.dp)
-                        top.linkTo(parent.top, 16.dp)
+                        start.linkTo(parent.start, 24.dp)
+                        top.linkTo(bmiResultRef.top)
+                        bottom.linkTo(bmiResultRef.bottom)
                         width = Dimension.fillToConstraints
                     }
 
-            )
-            Text(
-                text = age,
-                fontSize = 12.sp,
-                modifier = Modifier
-                    .constrainAs(ageRef) {
-                        top.linkTo(nameRef.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
             )
 
             Row(
@@ -88,8 +83,7 @@ fun ProfileItem(
                     .constrainAs(dataRowRef) {
                         start.linkTo(parent.start, 16.dp)
                         end.linkTo(parent.end, 16.dp)
-                        top.linkTo(ageRef.bottom)
-                        bottom.linkTo(bmiResultRef.top)
+                        top.linkTo(bmiResultRef.bottom, 16.dp)
                     }
                     .fillMaxWidth()
             ) {
@@ -119,9 +113,8 @@ fun ProfileItem(
                     )
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                     .constrainAs(bmiResultRef) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom, 16.dp)
+                        top.linkTo(parent.top, 16.dp)
+                        end.linkTo(parent.end, 24.dp)
                     }
             ) {
                 Text(
@@ -133,12 +126,51 @@ fun ProfileItem(
                         ),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold
-                    ),
-                    modifier = Modifier
+                    )
                 )
             }
-
-
+            Row(
+                modifier = modifier.constrainAs(buttonRef) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(dataRowRef.bottom, 16.dp)
+                }
+            ) {
+                Button(
+                    onClick = navigateToAdd,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = MaterialTheme.colorScheme.surface
+                    ),
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.add_profile),
+                        style = TextStyle(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
+                }
+                Button(
+                    onClick = navigateToDetail,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = MaterialTheme.colorScheme.surface
+                    ),
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.detail),
+                        style = TextStyle(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
+                }
+            }
         }
     }
 }
@@ -155,7 +187,8 @@ fun DataColumn(
             text = title,
             style = TextStyle(
                 fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White,
             ),
             modifier = Modifier
         )
@@ -163,7 +196,8 @@ fun DataColumn(
         Text(
             text = data,
             style = TextStyle(
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                color = Color.White,
             ),
             modifier = Modifier
         )
@@ -178,13 +212,13 @@ fun ProfileContainerPreview() {
     Capstone_ProjectTheme {
         ProfileItem(
             name = "John Doe",
-            age = "2 year(s) 11 month(s)",
             gender = "Male",
             weight = "10 Kg",
             height = "80 Cm",
             bmiResult = "Normal",
             bmiIndex = "15.6",
-            onClick = {},
+            navigateToDetail = {},
+            navigateToAdd = {}
         )
     }
 }

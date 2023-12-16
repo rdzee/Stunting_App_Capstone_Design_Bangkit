@@ -61,13 +61,13 @@ fun RecommendationScreen(
         ) {
             ProfileItem(
                 name = stringResource(id = R.string.name),
-                age = stringResource(id = R.string.age),
                 gender = stringResource(id = R.string.gender),
                 weight = stringResource(id = R.string.weight),
                 height = stringResource(id = R.string.height),
                 bmiResult = stringResource(id = R.string.bmi),
                 bmiIndex = stringResource(id = R.string.bmi),
-                onClick = {},
+                navigateToDetail = { },
+                navigateToAdd = { },
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
             )

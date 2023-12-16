@@ -5,12 +5,15 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
@@ -24,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.net.toUri
@@ -56,6 +61,7 @@ import com.littlegrow.capstone_project.model.FeatureData
 import com.littlegrow.capstone_project.ui.components.row.FeatureRow
 import com.littlegrow.capstone_project.ui.components.row.InformationRow
 import com.littlegrow.capstone_project.ui.components.row.ProfileRow
+import com.littlegrow.capstone_project.ui.components.shape.RectangleShape
 import com.littlegrow.capstone_project.ui.screen.Result
 import com.littlegrow.capstone_project.ui.screen.ViewModelFactory
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
@@ -80,14 +86,12 @@ fun HomeScreen(
     val listFeature: List<FeatureData> = listOf(
         FeatureData(
             id = "F1",
+            featurePicture =  R.drawable.home_icon_1,
             featureName = stringResource(id = R.string.feature_recommendation)
         ),
         FeatureData(
             id = "F2",
-            featureName = "?"
-        ),
-        FeatureData(
-            id = "F3",
+            featurePicture =  R.drawable.home_icon_2,
             featureName = "?"
         )
     )
@@ -142,7 +146,10 @@ fun HomeContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {},
+                colors = topAppBarColors(MaterialTheme.colorScheme.primary),
+                title = {
+
+                },
                 actions = {
                     IconButton(
                         onClick = {
@@ -152,6 +159,7 @@ fun HomeContent(
                         Icon(
                             imageVector = Icons.Outlined.AccountCircle,
                             contentDescription = stringResource(id = R.string.profile),
+                            tint = Color.White,
                             modifier = Modifier
                                 .size(32.dp)
                         )
@@ -219,7 +227,24 @@ fun HomeContent(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            val (containerRes, featureRef, featureRowRef, informationRef, informationRowRef) = createRefs()
+            val (boxRef, containerRes, featureRef, featureRowRef, informationRef, informationRowRef) = createRefs()
+            Box(
+                modifier = modifier
+                    .constrainAs(boxRef) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                    }
+            ) {
+                RectangleShape(
+                    shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = modifier
+                        .align(Alignment.Center)
+                        .height(150.dp)
+                        .fillMaxWidth()
+                )
+            }
             ProfileRow(
                 // TODO : Input Real Data Model
                 profileList = listOf(
@@ -228,18 +253,21 @@ fun HomeContent(
                 ),
                 navigateToDetail = navigateToDetail,
                 navigateToAdd = navigateToAdd,
-                modifier = Modifier.constrainAs(containerRes) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    width = Dimension.fillToConstraints
-                }
+                modifier = modifier
+                    .padding(top = 16.dp)
+                    .constrainAs(containerRes) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        width = Dimension.fillToConstraints
+                    }
             )
 
             Text(
                 text = stringResource(id = R.string.features),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
+                fontSize =  20.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .constrainAs(featureRef) {
                         top.linkTo(containerRes.bottom, 24.dp)
@@ -261,8 +289,9 @@ fun HomeContent(
 
             Text(
                 text = stringResource(id = R.string.information),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
+                fontSize =  20.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .constrainAs(informationRef) {
                         top.linkTo(featureRowRef.bottom, 32.dp)
@@ -298,16 +327,14 @@ fun HomeContentPreview() {
             listFeature = listOf(
                 FeatureData(
                     id = "",
+                    featurePicture =  R.drawable.home_icon_1,
                     featureName = stringResource(id = R.string.feature_recommendation)
                 ),
                 FeatureData(
                     id = "",
-                    featureName = "?"
+                    featurePicture =  R.drawable.home_icon_2,
+                    featureName = stringResource(id = R.string.feature_budget)
                 ),
-                FeatureData(
-                    id = "",
-                    featureName = "?"
-                )
             ),
             listInformation = listOf(
                 Information(
