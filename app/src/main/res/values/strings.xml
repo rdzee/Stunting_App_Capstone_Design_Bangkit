@@ -72,7 +72,7 @@
 
     <!-- Profile Data Row -->
     <string name="bmi">IMT</string>
-    <string name="add_profile">Tambah / Ganti Profil</string>
+    <string name="add_profile">Tambah Profil</string>
     <string name="detail">Detail</string>
     <string name="data_Weight">Berat</string>
     <string name="data_Height">Tinggi</string>
