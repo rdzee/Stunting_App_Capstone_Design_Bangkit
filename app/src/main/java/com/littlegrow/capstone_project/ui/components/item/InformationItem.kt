@@ -59,6 +59,7 @@ fun InformationItem(
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.primary,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
@@ -68,6 +69,7 @@ fun InformationItem(
         Text(
             text = stringResource(id = R.string.information_source, articleSource),
             style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.primary,
             maxLines = 1,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)

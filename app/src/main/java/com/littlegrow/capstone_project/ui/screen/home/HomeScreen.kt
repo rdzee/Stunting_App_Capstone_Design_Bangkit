@@ -241,7 +241,7 @@ fun HomeContent(
                     color = MaterialTheme.colorScheme.primary,
                     modifier = modifier
                         .align(Alignment.Center)
-                        .height(150.dp)
+                        .height(100.dp)
                         .fillMaxWidth()
                 )
             }

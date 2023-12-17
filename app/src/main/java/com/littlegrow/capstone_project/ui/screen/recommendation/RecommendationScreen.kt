@@ -67,7 +67,6 @@ fun RecommendationScreen(
                 bmiResult = stringResource(id = R.string.bmi),
                 bmiIndex = stringResource(id = R.string.bmi),
                 navigateToDetail = { },
-                navigateToAdd = { },
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
             )

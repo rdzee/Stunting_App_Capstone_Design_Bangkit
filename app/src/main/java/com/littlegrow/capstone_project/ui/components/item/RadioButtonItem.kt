@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,7 +40,8 @@ fun RadioButtonItem(
         .fillMaxWidth()) {
         Text(
             text = stringResource(id = R.string.gender),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary
         )
         Row(
             modifier = modifier.fillMaxWidth()
@@ -57,11 +59,16 @@ fun RadioButtonItem(
                 ) {
                     RadioButton(
                         selected = isSelectedItem(item),
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = MaterialTheme.colorScheme.primary,
+                            unselectedColor = MaterialTheme.colorScheme.surface
+                        ),
                         onClick = null
                     )
                     Text(
                         text = item,
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
                         )
                 }
             }

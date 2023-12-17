@@ -57,7 +57,6 @@ fun ProfileRow(
                     bmiResult = "Normal",
                     bmiIndex = "15.6",
                     navigateToDetail = navigateToDetail,
-                    navigateToAdd = navigateToAdd
                 )
             }
         }
