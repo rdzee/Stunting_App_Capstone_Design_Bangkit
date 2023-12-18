@@ -20,6 +20,7 @@
 
     <!-- Validation -->
     <string name="success">Berhasil</string>
+    <string name="error">Gagal Input Data</string>
 
     <!-- Input Data Screen -->
     <string name="submit">Submit</string>
@@ -33,9 +34,11 @@
     <string name="height_hint">Tinggi Anak</string>
     <string name="birth_date">Tanggal Lahir</string>
     <string name="age_hint">Umur Anak</string>
-    <string name="disesaseHistory">Riwayat Penyakit</string>
+    <string name="disesaseHistory">Riwayat Penyakit (Jika Tidak Ada Isi dengan -)</string>
     <string name="disesaseHistory_hint">Riwayat Penyakit Anak</string>
-    <string name="birthDistance">Jarak Kelahiran</string>
+    <string name="birthDistance">Jarak Kelahiran (Tahun)</string>
+    <string name="lingkarLengan">Lingkar Lengan (Cm)</string>
+    <string name="lingkarKepala">Lingkar Kepala (Cm)</string>
     <string name="birthDistance_hint">Untuk Ibu yang Sudah Memiliki Anak</string>
     <string name="gender">Jenis Kelamin</string>
     <string name="name_cannot_null">Data Harus Diisi</string>

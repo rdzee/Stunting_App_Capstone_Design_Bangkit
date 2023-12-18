@@ -7,10 +7,14 @@ data class InputData(
     val birthDate: Long = 0L,
     val diseaseHistory: String = "",
     val birthDistance: String = "",
+    val lingkarLengan: String = "",
+    val lingkarKepala: String = "",
     val nameError: Boolean = false,
     val weightError: Boolean = false,
     val heightError: Boolean = false,
     val birthDateError: Boolean = false,
     val diseaseHistoryError: Boolean = false,
     val birthDistanceError: Boolean = false,
+    val lingkarLenganError: Boolean = false,
+    val lingkarKepalaError: Boolean = false
 )

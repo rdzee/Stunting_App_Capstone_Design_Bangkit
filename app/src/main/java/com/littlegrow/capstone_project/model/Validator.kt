@@ -25,6 +25,14 @@ object Validator {
     fun validateBirthDistance(birthDistance: String): ValidationResult {
         return ValidationResult(birthDistance.isNotEmpty() || birthDistance.isEmpty())
     }
+
+    fun validateLingkarLengan(lingkarLengan: String): ValidationResult {
+        return ValidationResult(lingkarLengan.isNotEmpty())
+    }
+
+    fun validateLingkarKepala(lingkarKepala: String): ValidationResult {
+        return ValidationResult(lingkarKepala.isNotEmpty())
+    }
 }
 
 data class ValidationResult(

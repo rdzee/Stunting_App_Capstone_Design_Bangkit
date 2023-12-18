@@ -7,5 +7,7 @@ sealed class InputEvent {
     data class BirthDateChanged(val birthDate: Long): InputEvent()
     data class DiseaseHistoryChanged(val diseaseHistory: String): InputEvent()
     data class BirthDistanceChanged(val birthDistance: String): InputEvent()
+    data class LingkarLenganChanged(val lingkarLengan: String): InputEvent()
+    data class LingkarKepalaChanged(val lingkarKepala: String): InputEvent()
     object Submit: InputEvent()
 }

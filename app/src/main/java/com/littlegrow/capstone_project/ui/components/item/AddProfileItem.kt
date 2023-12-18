@@ -30,7 +30,7 @@ fun AddProfileItem(
     Card(
         modifier = modifier
             .clip(shape = RoundedCornerShape(10.dp))
-            .height(210.dp)
+            .height(170.dp)
             .fillMaxWidth()
             .clickable {
                 onClick()
