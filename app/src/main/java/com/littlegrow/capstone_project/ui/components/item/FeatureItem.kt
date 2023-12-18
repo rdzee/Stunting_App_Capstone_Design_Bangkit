@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,6 +52,7 @@ fun FeatureItem(
         Text(
             text = featureName,
             textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
             maxLines = 2,
             color = MaterialTheme.colorScheme.surface,

@@ -1,10 +1,14 @@
 package com.littlegrow.capstone_project.ui.screen.detail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,6 +23,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +32,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,6 +44,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -110,7 +118,7 @@ fun DetailContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { },
+                title = { stringResource(id = R.string.detail_profile) },
                 navigationIcon = {
                     if (isEdit) {
                         IconButton(
@@ -132,6 +140,7 @@ fun DetailContent(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
+                                tint = Color.White,
                                 contentDescription = stringResource(id = R.string.back),
                                 modifier = Modifier
                                     .size(32.dp)
@@ -162,6 +171,7 @@ fun DetailContent(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Edit,
+                                tint = Color.White,
                                 contentDescription = stringResource(id = R.string.edit_data),
                                 modifier = Modifier
                                     .size(24.dp)
@@ -175,8 +185,9 @@ fun DetailContent(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
+                                tint = Color.White,
                                 contentDescription = stringResource(id = R.string.delete_data),
-                                modifier = Modifier
+                                modifier = modifier
                                     .size(24.dp)
                             )
                         }
@@ -194,10 +205,18 @@ fun DetailContent(
 
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(modifier = modifier.padding(4.dp))
+            Image(
+                painter = painterResource(id = R.drawable.detail_image),
+                contentDescription = null,
+                modifier = modifier.padding(bottom = 4.dp)
+                    .height(200.dp)
+            )
             DetailData(
                 title = stringResource(id = R.string.name),
                 data = name
@@ -211,7 +230,7 @@ fun DetailContent(
                 data = gender
             )
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = modifier.fillMaxWidth()
             ) {
                 DetailInput(
                     title = stringResource(id = R.string.weight),
@@ -234,7 +253,9 @@ fun DetailContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.disesaseHistory),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.primary
                 )
                 if (diseaseHistory.isEmpty()) {
                     Text(
@@ -247,11 +268,13 @@ fun DetailContent(
                     diseaseHistory.mapIndexed { index, disease ->
                         Text(
                             text = "${disease}${if (index != diseaseHistory.lastIndex) ", " else ""}",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontSize = 18.sp
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 18.sp,
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
+                Divider(color = MaterialTheme.colorScheme.primary, thickness = 1.dp)
             }
             if (isEdit) {
                 Row(
@@ -304,13 +327,18 @@ fun DetailData(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.titleMedium,
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.primary
+
         )
         Text(
             text = data,
-            style = MaterialTheme.typography.titleMedium,
-            fontSize = 18.sp
+            style = MaterialTheme.typography.bodySmall,
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.primary
         )
+        Divider(color = MaterialTheme.colorScheme.primary, thickness = 1.dp)
     }
 }
 
@@ -331,7 +359,9 @@ fun DetailInput(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.titleMedium,
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.primary
         )
         TextField(
             readOnly = !isEdit,
@@ -340,9 +370,19 @@ fun DetailInput(
                 keyboardType = KeyboardType.Number
             ),
             textStyle = TextStyle(
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontSize = 18.sp
             ),
-            onValueChange = onInputChange
+            onValueChange = onInputChange,
+            colors = TextFieldDefaults.colors(
+                focusedTextColor = MaterialTheme.colorScheme.primary,
+                unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                disabledContainerColor = Color.Transparent,
+                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            )
         )
     }
 }
@@ -350,17 +390,19 @@ fun DetailInput(
 @Composable
 fun DeleteDialog(
     setShowDeleteDialog: (Boolean) -> Unit
-){
+) {
     AlertDialog(
         onDismissRequest = { setShowDeleteDialog(false) },
         title = {
             Text(
-                text = stringResource(id = R.string.delete_title)
+                text = stringResource(id = R.string.delete_title),
+                color = Color.White
             )
         },
         text = {
             Text(
-                text = stringResource(id = R.string.delete_warning)
+                text = stringResource(id = R.string.delete_warning),
+                color = Color.White
             )
         },
         dismissButton = {
@@ -369,7 +411,10 @@ fun DeleteDialog(
                     setShowDeleteDialog(false)
                 }
             ) {
-                Text(text = stringResource(id = R.string.cancel))
+                Text(
+                    text = stringResource(id = R.string.cancel),
+                    color = Color.White
+                )
             }
         },
         confirmButton = {
@@ -378,7 +423,10 @@ fun DeleteDialog(
                     // TODO : Delete Profile
                 }
             ) {
-                Text(text = stringResource(id = R.string.delete_data))
+                Text(
+                    text = stringResource(id = R.string.delete_data),
+                    color = Color.White
+                )
             }
         }
     )

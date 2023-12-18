@@ -2,6 +2,7 @@
     <string name="app_name">Little Grow</string>
 
     <!-- Basic -->
+    <string name="greeting">Hallo</string>
     <string name="back">Kembali</string>
     <string name="okay">Oke</string>
     <string name="age_display">%s tahun %s bulan</string>
@@ -21,6 +22,7 @@
     <string name="success">Berhasil</string>
 
     <!-- Input Data Screen -->
+    <string name="submit">Submit</string>
     <string name="name">Nama Lengkap</string>
     <string name="name_hint">Nama Anak</string>
     <string name="male">Laki - laki</string>
@@ -45,6 +47,7 @@
     <string name="vitamin">Vitamin</string>
 
     <!-- Detail Screen -->
+    <string name="detail_profile">Detail Profil</string>
     <string name="edit_data">Edit</string>
     <string name="age">Umur</string>
     <string name="delete_data">Hapus</string>
@@ -73,7 +76,7 @@
     <!-- Profile Data Row -->
     <string name="bmi">IMT</string>
     <string name="add_profile">Tambah Profil</string>
-    <string name="detail">Detail</string>
+    <string name="to_detail">Klik Untuk Detail Lebih Lanjut</string>
     <string name="data_Weight">Berat</string>
     <string name="data_Height">Tinggi</string>
     <string name="add_new_data">Tambah Profil Baru</string>

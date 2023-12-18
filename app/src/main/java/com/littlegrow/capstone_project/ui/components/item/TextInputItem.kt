@@ -7,7 +7,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActionScope
@@ -15,8 +14,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -59,7 +58,7 @@ fun TextInputItem(
             color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = modifier.padding(4.dp))
-        TextField(
+        OutlinedTextField(
             value = textInput,
             onValueChange = {
                 textInput = it
@@ -83,7 +82,7 @@ fun TextInputItem(
                 unfocusedIndicatorColor = Color.Transparent,
                 errorTextColor = Color.Red,
             ),
-            modifier = modifier.height(50.dp)
+            modifier = modifier
                 .fillMaxWidth()
                 .border(BorderStroke(
                     width = 3.dp,

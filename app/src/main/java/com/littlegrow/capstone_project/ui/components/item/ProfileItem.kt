@@ -1,5 +1,6 @@
 package com.littlegrow.capstone_project.ui.components.item
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.colorResource
@@ -47,20 +49,20 @@ fun ProfileItem(
     modifier: Modifier = Modifier
 ) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
+        elevation = CardDefaults.cardElevation(defaultElevation = 15.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = modifier
-            .clip(RoundedCornerShape(30.dp))
-            .height(140.dp)
+            .height(170.dp)
             .clickable { navigateToDetail() }
     ) {
         ConstraintLayout(
             modifier = Modifier.fillMaxSize()
         ) {
-            val (nameRef, bmiResultRef, dataRowRef) = createRefs()
+            val (nameRef, bmiResultRef, dataRowRef, clickRef) = createRefs()
             Text(
                 text = name,
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
@@ -122,11 +124,27 @@ fun ProfileItem(
                         shadow = Shadow(
                             Color.Black, Offset(2f, 1f)
                         ),
-                        fontSize = 20.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 )
             }
+            Text(
+                text = stringResource(id = R.string.to_detail),
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
+                ),
+                modifier = Modifier
+                    .constrainAs(clickRef) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(dataRowRef.bottom, 20.dp)
+                        width = Dimension.fillToConstraints
+                    }
+            )
         }
     }
 }
@@ -143,7 +161,7 @@ fun DataColumn(
             text = title,
             style = TextStyle(
                 fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.primary,
             ),
             modifier = Modifier

@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -147,9 +148,7 @@ fun HomeContent(
         topBar = {
             TopAppBar(
                 colors = topAppBarColors(MaterialTheme.colorScheme.primary),
-                title = {
-
-                },
+                title = {},
                 actions = {
                     IconButton(
                         onClick = {
@@ -227,7 +226,7 @@ fun HomeContent(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            val (boxRef, containerRes, featureRef, featureRowRef, informationRef, informationRowRef) = createRefs()
+            val (boxRef, containerRes, buttonRef, featureRef, featureRowRef, informationRef, informationRowRef) = createRefs()
             Box(
                 modifier = modifier
                     .constrainAs(boxRef) {
@@ -241,7 +240,7 @@ fun HomeContent(
                     color = MaterialTheme.colorScheme.primary,
                     modifier = modifier
                         .align(Alignment.Center)
-                        .height(100.dp)
+                        .height(130.dp)
                         .fillMaxWidth()
                 )
             }
@@ -263,6 +262,23 @@ fun HomeContent(
                     }
             )
 
+            Button(
+                onClick = { navigateToAdd() },
+                modifier = modifier
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp)
+                    .fillMaxWidth()
+                    .constrainAs(buttonRef) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(containerRes.bottom)
+                    }
+            ) {
+                Text(
+                    text = stringResource(id = R.string.add_profile),
+                    style = MaterialTheme.typography.titleMedium
+                    )
+            }
+
             Text(
                 text = stringResource(id = R.string.features),
                 fontSize =  20.sp,
@@ -270,7 +286,7 @@ fun HomeContent(
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .constrainAs(featureRef) {
-                        top.linkTo(containerRes.bottom, 24.dp)
+                        top.linkTo(buttonRef.bottom, 24.dp)
                         start.linkTo(parent.start, 16.dp)
                     }
             )

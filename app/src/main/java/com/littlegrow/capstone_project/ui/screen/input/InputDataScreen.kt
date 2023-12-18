@@ -121,7 +121,8 @@ fun InputDataScreen(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                     ),
-                    modifier = modifier.height(50.dp)
+                    modifier = modifier
+                        .height(50.dp)
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp)
                         .onFocusChanged {
@@ -131,10 +132,14 @@ fun InputDataScreen(
                         }
                         .border(
                             BorderStroke(
-                            width = 3.dp,
-                            brush = Brush.horizontalGradient(
-                                listOf(MaterialTheme.colorScheme.tertiary,
-                                    MaterialTheme.colorScheme.primary))),
+                                width = 3.dp,
+                                brush = Brush.horizontalGradient(
+                                    listOf(
+                                        MaterialTheme.colorScheme.tertiary,
+                                        MaterialTheme.colorScheme.primary
+                                    )
+                                )
+                            ),
                             shape = RoundedCornerShape(50)
                         )
                 )
@@ -183,10 +188,11 @@ fun InputDataScreen(
                 }
             }
 
+            Spacer(modifier = modifier.padding(4.dp))
+
             RadioButtonItem(
                 item1 = stringResource(id = R.string.male),
-                item2 = stringResource(id = R.string.female),
-                modifier = modifier.padding(top = 8.dp)
+                item2 = stringResource(id = R.string.female)
             )
             TextInputItem(
                 text = stringResource(id = R.string.weight),
@@ -227,7 +233,7 @@ fun InputDataScreen(
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
-                Text("Submit")
+                Text(stringResource(id = R.string.submit))
             }
         }
     }
