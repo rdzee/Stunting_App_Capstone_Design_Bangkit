@@ -1,5 +1,6 @@
 package com.littlegrow.capstone_project.ui.components.item
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,11 +29,20 @@ import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 fun RadioButtonItem(
     item1: String,
     item2: String,
-    modifier: Modifier = Modifier
+    onItemSelected: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    context: Context = LocalContext.current
 ) {
     var selectedValue by remember { mutableStateOf("") }
 
-    val isSelectedItem: (String) -> Boolean = { selectedValue == it }
+    val isSelectedItem: (String) -> Boolean = {
+        if (selectedValue == context.getString(R.string.male)) {
+            onItemSelected("Laki")
+        } else if (selectedValue == context.getString(R.string.female)) {
+            onItemSelected("Perempuan")
+        }
+        selectedValue == it
+    }
     val onChangeState: (String) -> Unit = { selectedValue = it }
 
     val items = listOf(item1, item2)
@@ -80,6 +91,6 @@ fun RadioButtonItem(
 @Preview(showBackground = true)
 fun RadioButtonItemPreview() {
     Capstone_ProjectTheme {
-        RadioButtonItem("Male", "Female")
+        RadioButtonItem("Male", "Female", {})
     }
 }

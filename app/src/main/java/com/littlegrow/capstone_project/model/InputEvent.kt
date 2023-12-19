@@ -9,5 +9,6 @@ sealed class InputEvent {
     data class BirthDistanceChanged(val birthDistance: String): InputEvent()
     data class LingkarLenganChanged(val lingkarLengan: String): InputEvent()
     data class LingkarKepalaChanged(val lingkarKepala: String): InputEvent()
+    data class GenderChanged(val gender: String): InputEvent()
     object Submit: InputEvent()
 }

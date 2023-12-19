@@ -7,11 +7,13 @@ object Validator {
     }
 
     fun validateWeight(weight: String): ValidationResult {
-        return ValidationResult(weight.isNotEmpty())
+        val isDouble = weight.toDoubleOrNull()
+        return ValidationResult(weight.isNotEmpty() && isDouble != null)
     }
 
     fun validateHeight(height: String): ValidationResult {
-        return ValidationResult(height.isNotEmpty())
+        val isDouble = height.toDoubleOrNull()
+        return ValidationResult(height.isNotEmpty() && isDouble != null)
     }
 
     fun validateBirthDate(birthDate: Long): ValidationResult {
@@ -23,15 +25,22 @@ object Validator {
     }
 
     fun validateBirthDistance(birthDistance: String): ValidationResult {
-        return ValidationResult(birthDistance.isNotEmpty() || birthDistance.isEmpty())
+        val isInt = birthDistance.toIntOrNull()
+        return ValidationResult(birthDistance.isNotEmpty() && isInt != null)
     }
 
     fun validateLingkarLengan(lingkarLengan: String): ValidationResult {
-        return ValidationResult(lingkarLengan.isNotEmpty())
+        val isDouble = lingkarLengan.toDoubleOrNull()
+        return ValidationResult(lingkarLengan.isNotEmpty() && isDouble != null)
     }
 
     fun validateLingkarKepala(lingkarKepala: String): ValidationResult {
-        return ValidationResult(lingkarKepala.isNotEmpty())
+        val isDouble = lingkarKepala.toDoubleOrNull()
+        return ValidationResult(lingkarKepala.isNotEmpty() && isDouble != null)
+    }
+
+    fun validateGender(gender: String): ValidationResult {
+        return ValidationResult(gender.isNotEmpty())
     }
 }
 

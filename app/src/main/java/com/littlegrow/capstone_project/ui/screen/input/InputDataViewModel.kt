@@ -5,7 +5,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.littlegrow.capstone_project.data.DataRepository
+import com.littlegrow.capstone_project.model.InputBodyData
 import com.littlegrow.capstone_project.model.InputData
 import com.littlegrow.capstone_project.model.InputEvent
 import com.littlegrow.capstone_project.model.ValidationEvent
@@ -26,7 +28,7 @@ class InputDataViewModel(
 
     val validationEvent = MutableSharedFlow<ValidationEvent>()
 
-
+    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
     fun onEvent(event: InputEvent) {
         when (event) {
             is InputEvent.NameChanged -> {
@@ -71,11 +73,19 @@ class InputDataViewModel(
                     lingkarKepala = event.lingkarKepala
                 )
             }
+
             is InputEvent.LingkarLenganChanged -> {
                 _uiState.value = _uiState.value.copy(
                     lingkarLengan = event.lingkarLengan
                 )
             }
+
+            is InputEvent.GenderChanged -> {
+                _uiState.value = _uiState.value.copy(
+                    gender = event.gender
+                )
+            }
+
             is InputEvent.Submit -> {
                 validateInputs()
             }
@@ -92,6 +102,7 @@ class InputDataViewModel(
         val birthDistanceResult = Validator.validateBirthDistance(_uiState.value.birthDistance)
         val lingkarLenganResult = Validator.validateLingkarLengan(_uiState.value.lingkarLengan)
         val lingkarKepalaResult = Validator.validateLingkarKepala(_uiState.value.lingkarKepala)
+        val genderResult = Validator.validateGender(_uiState.value.gender)
 
         _uiState.value = _uiState.value.copy(
             nameError = !nameResult.status,
@@ -101,7 +112,8 @@ class InputDataViewModel(
             diseaseHistoryError = !diseaseHistoryResult.status,
             birthDistanceError = !birthDistanceResult.status,
             lingkarLenganError = !lingkarLenganResult.status,
-            lingkarKepalaError = !lingkarKepalaResult.status
+            lingkarKepalaError = !lingkarKepalaResult.status,
+            genderError = !genderResult.status
         )
 
         val hasError = listOf(
@@ -117,42 +129,47 @@ class InputDataViewModel(
 
         viewModelScope.launch {
             if (!hasError) {
-                val listData: List<String> = listOf(
+                val predictData: List<String> = listOf(
                     _uiState.value.height,
                     _uiState.value.weight,
                     _uiState.value.lingkarKepala,
                     _uiState.value.lingkarLengan
                 )
-                getPrediction(listData)
+                getPrediction(predictData)
             }
         }
     }
 
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     private val _formattedDate = mutableStateOf("")
-
-    private val _prediction = MutableStateFlow(-1)
-    val prediction: StateFlow<Int>
-        get() = _prediction
-
     val formattedDate
         get() = _formattedDate
 
+    private val _prediction = MutableStateFlow("")
+    val prediction: StateFlow<String>
+        get() = _prediction
+
+
     private fun getPrediction(listData: List<String>?) {
-        if (listData != null){
+        if (listData != null) {
             viewModelScope.launch {
                 repository.predictData(listData)
-                    .collect {prediction ->
-                        when(prediction) {
+                    .collect { predictionResult ->
+                        when (predictionResult) {
                             is Result.Success -> {
-                                _prediction.value = prediction.data.prediction
-                                validationEvent.emit(ValidationEvent.Success)
+                                if (predictionResult.data.prediction == 0) {
+                                    _prediction.value = "Stunted"
+                                } else if (predictionResult.data.prediction == 1) {
+                                    _prediction.value = "Normal"
+                                }
+                                postData()
                             }
 
                             is Result.Error -> {
-                                Log.w("InputDataViewModel", prediction.error)
+                                Log.w("InputDataViewModel", predictionResult.error)
                                 validationEvent.emit(ValidationEvent.Error)
                             }
+
                             Result.Loading -> {
                                 validationEvent.emit(ValidationEvent.Loading)
                             }
@@ -160,5 +177,43 @@ class InputDataViewModel(
                     }
             }
         }
+    }
+
+    private fun postData() {
+        viewModelScope.launch {
+            if (currentUserId != null) {
+                val inputBodyData = InputBodyData(
+                    user_id = currentUserId,
+                    nama_anak = _uiState.value.name,
+                    jenis_kelamin = _uiState.value.gender,
+                    berat_badan = _uiState.value.weight.toDouble(),
+                    tinggi_badan = _uiState.value.height.toDouble(),
+                    umur = getAge(_uiState.value.birthDate),
+                    lingkar_lengan = _uiState.value.lingkarLengan.toDouble(),
+                    lingkar_kepala = _uiState.value.lingkarKepala.toDouble(),
+                    riwayat_penyakit = _uiState.value.diseaseHistory,
+                    jarak_kelahiran = _uiState.value.birthDistance.toDouble(),
+                    status_user = prediction.value
+                )
+                repository.postData(inputBodyData).collect{inputResult ->
+                    when(inputResult) {
+                        is Result.Success -> {
+                            validationEvent.emit(ValidationEvent.Success)
+                        }
+                        is Result.Error -> {
+                            Log.w("InputDataViewModel", inputResult.error)
+                            validationEvent.emit(ValidationEvent.Error)
+                        }
+                        is Result.Loading -> {
+                            validationEvent.emit(ValidationEvent.Loading)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getAge(birthDate: Long): Long {
+        return System.currentTimeMillis() - birthDate
     }
 }

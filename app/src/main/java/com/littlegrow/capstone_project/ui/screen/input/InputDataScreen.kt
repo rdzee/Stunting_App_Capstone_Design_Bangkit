@@ -223,7 +223,8 @@ fun InputDataScreen(
 
                 RadioButtonItem(
                     item1 = stringResource(id = R.string.male),
-                    item2 = stringResource(id = R.string.female)
+                    item2 = stringResource(id = R.string.female),
+                    onItemSelected = {inputDataViewModel.onEvent(InputEvent.GenderChanged(it))}
                 )
                 TextInputItem(
                     text = stringResource(id = R.string.weight),

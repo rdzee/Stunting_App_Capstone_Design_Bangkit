@@ -24,4 +24,19 @@ data class DetailDataResponse(
 
 	@field:SerializedName("jenis_kelamin")
 	val jenisKelamin: String? = null,
+
+	@field:SerializedName("lingkar_lengan")
+	val lingkarLengan: Int? = null,
+
+	@field:SerializedName("lingkar_kepala")
+	val lingkarKepala: Int? = null,
+
+	@field:SerializedName("status_user")
+	val statusUser: String? = null,
+
+	@field:SerializedName("user_id")
+	val userId: String,
+
+	@field:SerializedName("profile_id")
+	val profileId: String
 )

@@ -9,6 +9,7 @@ data class InputData(
     val birthDistance: String = "",
     val lingkarLengan: String = "",
     val lingkarKepala: String = "",
+    val gender: String = "",
     val nameError: Boolean = false,
     val weightError: Boolean = false,
     val heightError: Boolean = false,
@@ -16,5 +17,6 @@ data class InputData(
     val diseaseHistoryError: Boolean = false,
     val birthDistanceError: Boolean = false,
     val lingkarLenganError: Boolean = false,
-    val lingkarKepalaError: Boolean = false
+    val lingkarKepalaError: Boolean = false,
+    val genderError: Boolean = false
 )
