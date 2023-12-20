@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -58,6 +59,7 @@ import com.google.firebase.ktx.Firebase
 import com.littlegrow.capstone_project.R
 import com.littlegrow.capstone_project.data.local.database.Information
 import com.littlegrow.capstone_project.di.Injection
+import com.littlegrow.capstone_project.model.DetailDataResponse
 import com.littlegrow.capstone_project.model.FeatureData
 import com.littlegrow.capstone_project.ui.components.row.FeatureRow
 import com.littlegrow.capstone_project.ui.components.row.InformationRow
@@ -70,7 +72,7 @@ import com.littlegrow.capstone_project.util.getGoogleSignInClient
 
 @Composable
 fun HomeScreen(
-    navigateToDetail: () -> Unit,
+    navigateToDetail: (String) -> Unit,
     navigateToAdd: () -> Unit,
     navigateToLogin: () -> Unit,
     navigateToChooseProfile: (String) -> Unit,
@@ -80,9 +82,13 @@ fun HomeScreen(
         factory = ViewModelFactory(Injection.provideRepo(context))
     )
 ) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getAllProfiles()
+    }
     val auth = Firebase.auth
     var expanded by remember { mutableStateOf(false) }
     var listInformation: List<Information> = remember { mutableStateListOf() }
+    var listProfile: List<DetailDataResponse> = remember { mutableStateListOf() }
 
     val listFeature: List<FeatureData> = listOf(
         FeatureData(
@@ -93,7 +99,7 @@ fun HomeScreen(
         FeatureData(
             id = "F2",
             featurePicture =  R.drawable.home_icon_2,
-            featureName = "?"
+            featureName = stringResource(id = R.string.feature_budget)
         )
     )
 
@@ -104,8 +110,21 @@ fun HomeScreen(
                 listInformation = result.data
             }
             is Result.Error -> {
-                Log.d("PopularMovies: ", result.error)
+                Log.d("InformationList: ", result.error)
                 Toast.makeText(context, "HealthInformation: ${ result.error }", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    viewModel.profileList.collectAsState().value.let { result ->
+        when(result) {
+            is Result.Loading -> viewModel.getAllProfiles()
+            is Result.Success -> {
+                listProfile = result.data
+            }
+            is Result.Error -> {
+                Log.d("ProfileList: ", result.error)
+                Toast.makeText(context, "ProfileList: ${result.error}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -113,6 +132,7 @@ fun HomeScreen(
     HomeContent(
         image = auth.currentUser?.photoUrl,
         email = auth.currentUser?.email,
+        listProfile = listProfile,
         listFeature = listFeature,
         listInformation = listInformation,
         expanded = expanded,
@@ -135,11 +155,12 @@ fun HomeContent(
     image: Uri?,
     email: String?,
     expanded: Boolean,
+    listProfile: List<DetailDataResponse>,
     listFeature: List<FeatureData>,
     listInformation: List<Information>?,
     setExpanded: (Boolean) -> Unit,
     navigateToChooseProfile: (String) -> Unit,
-    navigateToDetail: () -> Unit,
+    navigateToDetail: (String) -> Unit,
     navigateToAdd: () -> Unit,
     navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier
@@ -245,11 +266,7 @@ fun HomeContent(
                 )
             }
             ProfileRow(
-                // TODO : Input Real Data Model
-                profileList = listOf(
-                    "1",
-                    "2"
-                ),
+                profileList = listProfile,
                 navigateToDetail = navigateToDetail,
                 navigateToAdd = navigateToAdd,
                 modifier = modifier
@@ -367,6 +384,7 @@ fun HomeContentPreview() {
             navigateToChooseProfile = {},
             setExpanded = {},
             expanded = false,
+            listProfile = listOf()
         )
     }
 }

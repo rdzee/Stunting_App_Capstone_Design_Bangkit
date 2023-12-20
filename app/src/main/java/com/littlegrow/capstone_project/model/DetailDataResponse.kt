@@ -5,34 +5,34 @@ import com.google.gson.annotations.SerializedName
 data class DetailDataResponse(
 
 	@field:SerializedName("nama_anak")
-	val namaAnak: String? = null,
+	val namaAnak: String,
 
 	@field:SerializedName("umur")
-	val umur: Long? = null,
+	val umur: Long,
 
 	@field:SerializedName("jarak_kelahiran")
-	val jarakKelahiran: Int? = null,
+	val jarakKelahiran: Int,
 
 	@field:SerializedName("berat_badan")
-	val beratBadan: Int? = null,
+	val beratBadan: Double,
 
 	@field:SerializedName("riwayat_penyakit")
-	val riwayatPenyakit: String? = null,
+	val riwayatPenyakit: String,
 
 	@field:SerializedName("tinggi_badan")
-	val tinggiBadan: Int? = null,
+	val tinggiBadan: Double,
 
 	@field:SerializedName("jenis_kelamin")
-	val jenisKelamin: String? = null,
+	val jenisKelamin: String,
 
 	@field:SerializedName("lingkar_lengan")
-	val lingkarLengan: Int? = null,
+	val lingkarLengan: Double,
 
 	@field:SerializedName("lingkar_kepala")
-	val lingkarKepala: Int? = null,
+	val lingkarKepala: Double,
 
 	@field:SerializedName("status_user")
-	val statusUser: String? = null,
+	val statusUser: String,
 
 	@field:SerializedName("user_id")
 	val userId: String,

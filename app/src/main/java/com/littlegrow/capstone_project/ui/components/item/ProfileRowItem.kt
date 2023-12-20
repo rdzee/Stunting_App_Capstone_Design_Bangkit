@@ -1,6 +1,5 @@
 package com.littlegrow.capstone_project.ui.components.item
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,16 +22,12 @@ import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 fun ProfileRowItem(
     name: String,
     listDescription: List<String>,
-    navigateToFeature: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(65.dp)
-            .clickable {
-                navigateToFeature()
-            }
     ) {
         ConstraintLayout(
             modifier = Modifier
@@ -93,7 +88,6 @@ fun ProfileRowItemPreview() {
                 "14.2 Kg",
                 "80 Cm"
             ),
-            navigateToFeature = {}
         )
     }
 }

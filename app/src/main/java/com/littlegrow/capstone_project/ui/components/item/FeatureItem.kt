@@ -2,7 +2,6 @@ package com.littlegrow.capstone_project.ui.components.item
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,7 +29,6 @@ fun FeatureItem(
     featureId: String,
     featureName: String,
     picture: Int,
-    navigateToChooseProfile: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -39,9 +37,6 @@ fun FeatureItem(
             .shadow(10.dp, shape = RoundedCornerShape(10.dp))
             .background(color = Color.White)
             .padding(vertical = 8.dp)
-            .clickable {
-                navigateToChooseProfile(featureId)
-            }
     ) {
         Image(
             painter = painterResource(id = picture),
@@ -69,7 +64,6 @@ fun FeatureItemPreview() {
     Capstone_ProjectTheme {
         FeatureItem(
             featureId = "",
-            navigateToChooseProfile = {},
             featureName = stringResource(id = R.string.feature_recommendation),
             picture = R.drawable.home_icon_1
         )

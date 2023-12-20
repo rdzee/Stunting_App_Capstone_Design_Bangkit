@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private var BASE_URL = "https://little-grow.et.r.appspot.com/"
+        private var BASE_URL = "https://api-input-zndgno73va-de.a.run.app/"
 
         fun getApiService(): ApiService{
             val loggingInterceptor =

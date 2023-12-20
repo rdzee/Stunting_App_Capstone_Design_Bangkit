@@ -34,7 +34,7 @@
     <string name="height_hint">Tinggi Anak</string>
     <string name="birth_date">Tanggal Lahir</string>
     <string name="age_hint">Umur Anak</string>
-    <string name="disesaseHistory">Riwayat Penyakit (Jika Tidak Ada Isi dengan -)</string>
+    <string name="disesaseHistory">Riwayat Penyakit (Pisahkan dengan ,) (Jika Tidak Ada Isi dengan -)</string>
     <string name="disesaseHistory_hint">Riwayat Penyakit Anak</string>
     <string name="birthDistance">Jarak Kelahiran (Tahun)</string>
     <string name="lingkarLengan">Lingkar Lengan (Cm)</string>
@@ -44,7 +44,7 @@
     <string name="name_cannot_null">Data Harus Diisi</string>
 
     <!--Recommendation Screen-->
-    <string name="recommendation">Rekomendasi Gizi</string>
+    <string name="recommendation">Rekomendasi Makanan</string>
     <string name="calorie">Kalori</string>
     <string name="protein">Protein</string>
     <string name="vitamin">Vitamin</string>
@@ -87,9 +87,13 @@
     <!-- Feature Name -->
     <string name="features">Fitur</string>
     <string name="feature_recommendation">Rekomendasi Gizi</string>
-    <string name="feature_budget">Anggaran Makanan</string>
+    <string name="feature_budget">Anggaran</string>
 
     <!-- Information -->
     <string name="information">Informasi Kesehatan</string>
     <string name="information_source">Source : %s</string>
+
+    <!-- Budget Screen -->
+    <string name="budget_screen">Anggaran Makanan</string>
+    <string name="coming_soon">Segera Hadir</string>
 </resources>

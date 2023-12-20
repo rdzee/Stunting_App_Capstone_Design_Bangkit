@@ -28,7 +28,7 @@ class InputDataViewModel(
 
     val validationEvent = MutableSharedFlow<ValidationEvent>()
 
-    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+    private val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
     fun onEvent(event: InputEvent) {
         when (event) {
             is InputEvent.NameChanged -> {
@@ -157,11 +157,7 @@ class InputDataViewModel(
                     .collect { predictionResult ->
                         when (predictionResult) {
                             is Result.Success -> {
-                                if (predictionResult.data.prediction == 0) {
-                                    _prediction.value = "Stunted"
-                                } else if (predictionResult.data.prediction == 1) {
-                                    _prediction.value = "Normal"
-                                }
+                                _prediction.value = predictionResult.data.prediction.uppercase()
                                 postData()
                             }
 

@@ -1,8 +1,6 @@
 package com.littlegrow.capstone_project.ui.components.item
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,9 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.colorResource
@@ -44,8 +40,6 @@ fun ProfileItem(
     weight: String,
     height: String,
     bmiResult: String,
-    bmiIndex: String,
-    navigateToDetail: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -53,7 +47,6 @@ fun ProfileItem(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = modifier
             .height(170.dp)
-            .clickable { navigateToDetail() }
     ) {
         ConstraintLayout(
             modifier = Modifier.fillMaxSize()
@@ -65,13 +58,14 @@ fun ProfileItem(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                 ),
                 modifier = Modifier
                     .constrainAs(nameRef) {
                         start.linkTo(parent.start, 24.dp)
                         top.linkTo(bmiResultRef.top)
                         bottom.linkTo(bmiResultRef.bottom)
+                        end.linkTo(bmiResultRef.start)
                         width = Dimension.fillToConstraints
                     }
 
@@ -99,16 +93,14 @@ fun ProfileItem(
                     title = stringResource(id = R.string.data_Height),
                     data = height
                 )
-                DataColumn(
-                    title = stringResource(id = R.string.bmi),
-                    data = bmiIndex
-                )
             }
 
             Box(
                 modifier = Modifier
                     .background(
-                        colorResource(id = R.color.green),
+                        color = if (bmiResult == "STUNTED") colorResource(id = R.color.red) else colorResource(
+                            id = R.color.green
+                        ),
                         shape = RoundedCornerShape(25.dp)
                     )
                     .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -190,8 +182,6 @@ fun ProfileContainerPreview() {
             weight = "10 Kg",
             height = "80 Cm",
             bmiResult = "Normal",
-            bmiIndex = "15.6",
-            navigateToDetail = {},
         )
     }
 }

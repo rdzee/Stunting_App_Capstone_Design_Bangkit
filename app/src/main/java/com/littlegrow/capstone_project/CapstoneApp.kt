@@ -13,13 +13,13 @@ import androidx.navigation.navArgument
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.littlegrow.capstone_project.navigation.Screen
+import com.littlegrow.capstone_project.ui.screen.budget.BudgetScreen
 import com.littlegrow.capstone_project.ui.screen.choose.ChooseProfileScreen
 import com.littlegrow.capstone_project.ui.screen.detail.DetailScreen
 import com.littlegrow.capstone_project.ui.screen.home.HomeScreen
 import com.littlegrow.capstone_project.ui.screen.input.InputDataScreen
 import com.littlegrow.capstone_project.ui.screen.login.LoginScreen
 import com.littlegrow.capstone_project.ui.screen.recommendation.RecommendationScreen
-import com.littlegrow.capstone_project.util.FEATURE_ID
 
 @Composable
 fun CapstoneApp(
@@ -45,8 +45,8 @@ fun CapstoneApp(
                             }
                         }
                     },
-                    navigateToDetail = {
-                        navController.navigate(Screen.Detail.route)
+                    navigateToDetail = { profileId ->
+                        navController.navigate(Screen.Detail.createRoute(profileId))
                     },
                     navigateToAdd = {
                         navController.navigate(Screen.Add.route)
@@ -68,8 +68,13 @@ fun CapstoneApp(
                 )
             }
 
-            composable(Screen.Detail.route) {
+            composable(
+                route = Screen.Detail.route,
+                arguments = listOf(navArgument("profileId") { type = NavType.StringType })
+            ) {
+                val id = it.arguments?.getString("profileId") ?: ""
                 DetailScreen(
+                    profileId = id,
                     onBackClick = {
                         navController.navigateUp()
                     }
@@ -86,32 +91,47 @@ fun CapstoneApp(
 
             composable(
                 route = Screen.ChooseProfile.route,
-                arguments = listOf(navArgument(FEATURE_ID) {
+                arguments = listOf(navArgument("featureId") {
                     type = NavType.StringType
                 })
             ) {
-                val id = it.arguments?.getString(FEATURE_ID) ?: ""
+                val id = it.arguments?.getString("featureId") ?: ""
                 ChooseProfileScreen(
                     featureId = id,
-                    navigateToRecommendation = {
-                        navController.navigate(Screen.Recommendation.route)
+                    navigateToRecommendation = { profileId ->
+                        navController.navigate(Screen.Recommendation.createRoute(profileId))
                     },
-                    navigateToFeature2 = {},
-                    navigateToFeature3 = {},
+                    navigateToBudget = {
+                        navController.navigate(Screen.Budget.route)
+                    },
                     onBackClick = {
                         navController.navigateUp()
                     }
                 )
             }
 
-            composable(Screen.Recommendation.route) {
+            composable(
+                route = Screen.Recommendation.route,
+                arguments = listOf(
+                    navArgument("profileId") { type = NavType.StringType }
+                )
+            ) {
+                val id = it.arguments?.getString("profileId") ?: ""
                 RecommendationScreen(
+                    profileId = id,
                     onBackClick = {
                         navController.navigateUp()
                     }
                 )
             }
 
+            composable(Screen.Budget.route) {
+                BudgetScreen(
+                    onBackClick = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
     }
 }

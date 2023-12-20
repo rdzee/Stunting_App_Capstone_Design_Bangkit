@@ -2,6 +2,7 @@ package com.littlegrow.capstone_project.ui.components.row
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +13,10 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.littlegrow.capstone_project.R
+import com.littlegrow.capstone_project.model.DetailDataResponse
 import com.littlegrow.capstone_project.ui.components.item.AddProfileItem
 import com.littlegrow.capstone_project.ui.components.item.ProfileItem
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
@@ -27,11 +33,12 @@ import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProfileRow(
-    profileList: List<String>,
-    navigateToDetail: () -> Unit,
+    profileList: List<DetailDataResponse>,
+    navigateToDetail: (String) -> Unit,
     navigateToAdd: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var gender by remember { mutableStateOf("") }
     val pagerState = rememberPagerState (pageCount = {
         profileList.size + 1
     })
@@ -49,14 +56,19 @@ fun ProfileRow(
                     onClick = navigateToAdd
                 )
             } else {
+                if (profileList[page].jenisKelamin == "Laki") {
+                    gender = stringResource(id = R.string.male)
+                } else {
+                    gender = stringResource(id = R.string.female)
+                }
                 ProfileItem(
-                    name = "John Doe",
-                    gender = "Laki - Laki",
-                    weight = stringResource(id = R.string.weight_display, 10),
-                    height = stringResource(id = R.string.height_display, 80),
-                    bmiResult = "Normal",
-                    bmiIndex = "15.6",
-                    navigateToDetail = navigateToDetail,
+                    name = profileList[page].namaAnak,
+                    gender = gender,
+                    weight = stringResource(id = R.string.weight_display, profileList[page].beratBadan),
+                    height = stringResource(id = R.string.height_display, profileList[page].tinggiBadan),
+                    bmiResult = profileList[page].statusUser,
+                    modifier = Modifier
+                        .clickable { navigateToDetail(profileList[page].profileId) }
                 )
             }
         }
@@ -86,10 +98,7 @@ fun ProfileRow(
 fun ProfileRowPreview() {
     Capstone_ProjectTheme {
         ProfileRow(
-            profileList = listOf(
-                "1",
-                "2"
-            ),
+            profileList = listOf(),
             navigateToAdd = {},
             navigateToDetail = {}
         )

@@ -2,8 +2,8 @@ package com.littlegrow.capstone_project.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PredictResponse(
+data class DeleteUpdateResponse(
 
-	@field:SerializedName("prediction")
-	val prediction: String
+	@field:SerializedName("message")
+	val message: String
 )

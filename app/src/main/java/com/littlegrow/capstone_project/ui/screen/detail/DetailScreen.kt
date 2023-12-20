@@ -1,12 +1,17 @@
 package com.littlegrow.capstone_project.ui.screen.detail
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +28,8 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,8 +40,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -54,39 +63,190 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.littlegrow.capstone_project.R
+import com.littlegrow.capstone_project.di.Injection
+import com.littlegrow.capstone_project.model.DetailDataResponse
+import com.littlegrow.capstone_project.model.UpdateBodyData
+import com.littlegrow.capstone_project.ui.screen.Result
+import com.littlegrow.capstone_project.ui.screen.ViewModelFactory
 import com.littlegrow.capstone_project.ui.theme.Capstone_ProjectTheme
+import java.util.Calendar
 
 @Composable
 fun DetailScreen(
+    profileId: String,
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    context: Context = LocalContext.current,
+    viewModel: DetailViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepo(context))
+    )
 ) {
+    var databaseData: DetailDataResponse? by remember { mutableStateOf(null) }
     var isEdit by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     var textInput by remember { mutableStateOf("") }
-    var weight by remember { mutableStateOf("14.2") }
-    var height by remember { mutableStateOf("80") }
+    var weight by remember { mutableStateOf("") }
+    var height by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf("") }
     val diseaseHistory = remember { mutableStateListOf<String>() }
+    var age by remember { mutableStateOf("") }
+    var lingkarKepala by remember { mutableStateOf("") }
+    var lingkarLengan by remember { mutableStateOf("") }
 
-    val ageDisplay = stringResource(id = R.string.age_display, 2, 11)
+    var loading by remember { mutableStateOf(false) }
+
+    viewModel.profileDetail.collectAsState(initial = Result.Loading).value.let { result ->
+        when (result) {
+            is Result.Loading -> {
+                viewModel.getProfileData(profileId)
+                loading = true
+            }
+
+            is Result.Success -> {
+                LaunchedEffect(key1 = Unit) {
+                    loading = false
+                    val res = result.data
+                    databaseData = res
+                    gender = if (res.jenisKelamin == "Laki") {
+                        context.getString(R.string.male)
+                    } else {
+                        context.getString(R.string.female)
+                    }
+                    name = res.namaAnak
+                    age = getAge(context = context, birth = res.umur)
+                    weight = res.beratBadan.toString()
+                    height = res.tinggiBadan.toString()
+                    lingkarKepala = res.lingkarKepala.toString()
+                    lingkarLengan = res.lingkarLengan.toString()
+                    val disease = res.riwayatPenyakit.replace(" ", "").split(",")
+                    disease.forEach {
+                        if (it != "-") {
+                            diseaseHistory.add(it)
+                        }
+                    }
+                }
+            }
+
+            is Result.Error -> {
+                loading = false
+                Log.d("DetailScreen: ", result.error)
+                Toast.makeText(
+                    LocalContext.current,
+                    "DetailScreen: ${result.error}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    viewModel.updateMessage.collectAsState().value.let { result ->
+        when (result) {
+            is Result.Loading -> {}
+            is Result.Success -> {
+                LaunchedEffect(key1 = Unit) {
+                    loading = false
+                    Toast.makeText(
+                        context,
+                        result.data.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    onBackClick()
+                }
+            }
+
+            is Result.Error -> {
+                loading = false
+                Toast.makeText(
+                    context,
+                    "UpdateData: ${result.error}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    viewModel.deleteMessage.collectAsState().value.let { result ->
+        when (result) {
+            is Result.Loading -> {}
+            is Result.Success -> {
+                Log.v("Detail", "masuk")
+                loading = false
+                showDeleteDialog = false
+                Toast.makeText(
+                    context,
+                    result.data.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+                onBackClick()
+            }
+
+            is Result.Error -> {
+                loading = false
+                Toast.makeText(
+                    context,
+                    "UpdateData: ${result.error}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
 
     DetailContent(
+        loading = loading,
         isEdit = isEdit,
-        name = "John Doe",
-        age = ageDisplay,
-        gender = "Laki - Laki",
+        name = name,
+        age = age,
+        gender = gender,
         weight = weight,
         height = height,
+        lingkarLengan = lingkarLengan,
+        lingkarKepala = lingkarKepala,
         textInput = textInput,
         diseaseHistory = diseaseHistory,
         showDeleteDialog = showDeleteDialog,
         setShowDeleteDialog = { showDeleteDialog = it },
         onWeightChange = { weight = it },
         onHeightChange = { height = it },
+        onLingkarLenganChanged = { lingkarLengan = it },
+        onLingkarKepalaChanged = { lingkarKepala = it },
         onAddDiseaseChange = { textInput = it },
-        setEdit = { isEdit = it },
+        setEdit = {
+            isEdit = it
+            if (!isEdit) {
+                weight = databaseData?.beratBadan.toString()
+                height = databaseData?.tinggiBadan.toString()
+                lingkarLengan = databaseData?.lingkarLengan.toString()
+                lingkarKepala = databaseData?.lingkarKepala.toString()
+                diseaseHistory.clear()
+                val disease = databaseData?.riwayatPenyakit?.replace(" ", "")?.split(",")
+                disease?.forEach { diseaseItem ->
+                    if (diseaseItem != "-") {
+                        diseaseHistory.add(diseaseItem)
+                    }
+                }
+            }
+        },
         addDisease = { diseaseHistory.add(it) },
+        onDeleteClicked = {
+            viewModel.deleteProfile(profileId)
+        },
+        onUpdateClicked = {
+            val updateData = UpdateBodyData(
+                berat_badan = weight.toDouble(),
+                tinggi_badan = height.toDouble(),
+                riwayat_penyakit = diseaseHistory.joinToString(", "),
+                lingkar_kepala = lingkarKepala.toDouble(),
+                lingkar_lengan = lingkarLengan.toDouble()
+            )
+            viewModel.updateProfile(
+                profileId = profileId,
+                updateData = updateData
+            )
+            loading = true
+        },
         onBackClick = onBackClick,
         modifier = modifier
     )
@@ -95,11 +255,14 @@ fun DetailScreen(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun DetailContent(
+    loading: Boolean,
     name: String,
     age: String,
     gender: String,
     weight: String,
     height: String,
+    lingkarKepala: String,
+    lingkarLengan: String,
     diseaseHistory: List<String>,
     isEdit: Boolean,
     textInput: String,
@@ -107,7 +270,11 @@ fun DetailContent(
     setShowDeleteDialog: (Boolean) -> Unit,
     onHeightChange: (String) -> Unit,
     onWeightChange: (String) -> Unit,
+    onLingkarKepalaChanged: (String) -> Unit,
+    onLingkarLenganChanged: (String) -> Unit,
     onAddDiseaseChange: (String) -> Unit,
+    onDeleteClicked: () -> Unit,
+    onUpdateClicked: () -> Unit,
     addDisease: (String) -> Unit,
     setEdit: (Boolean) -> Unit,
     onBackClick: () -> Unit,
@@ -117,14 +284,18 @@ fun DetailContent(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { stringResource(id = R.string.detail_profile) },
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.detail_profile),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                },
                 navigationIcon = {
                     if (isEdit) {
                         IconButton(
                             onClick = {
                                 setEdit(false)
-                                // TODO : Set Data Back to Before Edit
                             }
                         ) {
                             Icon(
@@ -152,7 +323,7 @@ fun DetailContent(
                     if (isEdit) {
                         IconButton(
                             onClick = {
-                                // TODO : Upload update
+                                onUpdateClicked()
                             }
                         ) {
                             Icon(
@@ -199,120 +370,158 @@ fun DetailContent(
     ) { innerPadding ->
         if (showDeleteDialog) {
             DeleteDialog(
-                setShowDeleteDialog = setShowDeleteDialog
+                setShowDeleteDialog = setShowDeleteDialog,
+                onDeleteClicked = onDeleteClicked
             )
         }
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
+        Box(
+            modifier = modifier
+                .fillMaxSize()
         ) {
-            Spacer(modifier = modifier.padding(4.dp))
-            Image(
-                painter = painterResource(id = R.drawable.detail_image),
-                contentDescription = null,
-                modifier = modifier.padding(bottom = 4.dp)
-                    .height(200.dp)
-            )
-            DetailData(
-                title = stringResource(id = R.string.name),
-                data = name
-            )
-            DetailData(
-                title = stringResource(id = R.string.age),
-                data = age
-            )
-            DetailData(
-                title = stringResource(id = R.string.gender),
-                data = gender
-            )
-            Row(
-                modifier = modifier.fillMaxWidth()
-            ) {
-                DetailInput(
-                    title = stringResource(id = R.string.weight),
-                    inputValue = weight,
-                    isEdit = isEdit,
-                    onInputChange = onWeightChange,
-                    modifier = Modifier
-                        .focusRequester(focusRequester)
-                )
-                DetailInput(
-                    title = stringResource(id = R.string.height),
-                    inputValue = height,
-                    isEdit = isEdit,
-                    onInputChange = onHeightChange
-                )
-            }
             Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
             ) {
-                Text(
-                    text = stringResource(id = R.string.disesaseHistory),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontSize = 18.sp,
-                    color = MaterialTheme.colorScheme.primary
+                Spacer(modifier = modifier.padding(4.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.detail_image),
+                    contentDescription = null,
+                    modifier = modifier
+                        .padding(bottom = 4.dp)
+                        .height(200.dp)
                 )
-                if (diseaseHistory.isEmpty()) {
-                    Text(
-                        text = "-",
-                    )
-                }
-                FlowRow(
-                    maxItemsInEachRow = 4
-                ) {
-                    diseaseHistory.mapIndexed { index, disease ->
-                        Text(
-                            text = "${disease}${if (index != diseaseHistory.lastIndex) ", " else ""}",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 18.sp,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                }
-                Divider(color = MaterialTheme.colorScheme.primary, thickness = 1.dp)
-            }
-            if (isEdit) {
+                DetailData(
+                    title = stringResource(id = R.string.name),
+                    data = name
+                )
+                DetailData(
+                    title = stringResource(id = R.string.age),
+                    data = age
+                )
+                DetailData(
+                    title = stringResource(id = R.string.gender),
+                    data = gender
+                )
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(bottom = 32.dp)
+                    modifier = modifier.fillMaxWidth()
                 ) {
-                    TextField(
-                        value = textInput,
-                        label = {
-                            Text(
-                                text = stringResource(id = R.string.add_disease_hint),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        },
-                        onValueChange = {
-                            onAddDiseaseChange(it)
-                        },
+                    DetailInput(
+                        title = stringResource(id = R.string.weight),
+                        inputValue = weight,
+                        isEdit = isEdit,
+                        onInputChange = onWeightChange,
                         modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .width(200.dp)
+                            .focusRequester(focusRequester)
                     )
-
-                    Button(
-                        enabled = textInput.isNotBlank(),
-                        onClick = {
-                            addDisease(textInput)
-                            onAddDiseaseChange("")
-                        }
-                    ) {
+                    DetailInput(
+                        title = stringResource(id = R.string.height),
+                        inputValue = height,
+                        isEdit = isEdit,
+                        onInputChange = onHeightChange
+                    )
+                }
+                Row(
+                    modifier = modifier.fillMaxWidth()
+                ) {
+                    DetailInput(
+                        title = stringResource(id = R.string.lingkarLengan),
+                        inputValue = lingkarLengan,
+                        isEdit = isEdit,
+                        onInputChange = onLingkarLenganChanged,
+                    )
+                    DetailInput(
+                        title = stringResource(id = R.string.lingkarKepala),
+                        inputValue = lingkarKepala,
+                        isEdit = isEdit,
+                        onInputChange = onLingkarKepalaChanged
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.disesaseHistory),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    if (diseaseHistory.isEmpty()) {
                         Text(
-                            text = stringResource(id = R.string.add_disease)
+                            text = "-",
                         )
                     }
+                    FlowRow(
+                        maxItemsInEachRow = 4
+                    ) {
+                        diseaseHistory.mapIndexed { index, disease ->
+                            Text(
+                                text = "${disease}${if (index != diseaseHistory.lastIndex) ", " else ""}",
+                                style = MaterialTheme.typography.bodySmall,
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                    Divider(color = MaterialTheme.colorScheme.primary, thickness = 1.dp)
                 }
+                if (isEdit) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(bottom = 32.dp)
+                    ) {
+                        TextField(
+                            value = textInput,
+                            label = {
+                                Text(
+                                    text = stringResource(id = R.string.add_disease_hint),
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            },
+                            onValueChange = {
+                                onAddDiseaseChange(it)
+                            },
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .width(200.dp)
+                        )
+
+                        Button(
+                            enabled = textInput.isNotBlank(),
+                            onClick = {
+                                addDisease(textInput)
+                                onAddDiseaseChange("")
+                            }
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.add_disease)
+                            )
+                        }
+                    }
+                }
+            }
+
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
             }
         }
     }
+}
+
+fun getAge(context: Context, birth: Long): String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = birth
+    val year = calendar.get(Calendar.YEAR) - 1970
+    val month = calendar.get(Calendar.MONTH)
+    return context.getString(R.string.age_display, year.toString(), month.toString())
 }
 
 @Composable
@@ -348,7 +557,7 @@ fun DetailInput(
     inputValue: String,
     isEdit: Boolean,
     onInputChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -389,7 +598,8 @@ fun DetailInput(
 
 @Composable
 fun DeleteDialog(
-    setShowDeleteDialog: (Boolean) -> Unit
+    setShowDeleteDialog: (Boolean) -> Unit,
+    onDeleteClicked: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = { setShowDeleteDialog(false) },
@@ -420,7 +630,7 @@ fun DeleteDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    // TODO : Delete Profile
+                    onDeleteClicked()
                 }
             ) {
                 Text(
@@ -439,7 +649,8 @@ fun DeleteDialog(
 fun DeleteDialogPreview() {
     Capstone_ProjectTheme {
         DeleteDialog(
-            setShowDeleteDialog = {}
+            setShowDeleteDialog = {},
+            onDeleteClicked = {}
         )
     }
 }
@@ -471,8 +682,15 @@ fun DetailContentPreview() {
             onAddDiseaseChange = {},
             onHeightChange = {},
             onWeightChange = {},
+            lingkarKepala = "",
+            lingkarLengan = "",
+            onLingkarKepalaChanged = {},
+            onLingkarLenganChanged = {},
             showDeleteDialog = false,
-            setShowDeleteDialog = {}
+            setShowDeleteDialog = {},
+            onDeleteClicked = {},
+            onUpdateClicked = {},
+            loading = false
         )
     }
 }

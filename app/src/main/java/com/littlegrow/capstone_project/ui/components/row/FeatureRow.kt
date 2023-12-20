@@ -1,5 +1,6 @@
 package com.littlegrow.capstone_project.ui.components.row
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -25,7 +26,10 @@ fun FeatureRow(
                 featureId = feature.id,
                 featureName = feature.featureName,
                 picture = feature.featurePicture,
-                navigateToChooseProfile = navigateToChooseProfile
+                modifier = Modifier
+                    .clickable {
+                        navigateToChooseProfile(feature.id)
+                    }
             )
         }
     }
