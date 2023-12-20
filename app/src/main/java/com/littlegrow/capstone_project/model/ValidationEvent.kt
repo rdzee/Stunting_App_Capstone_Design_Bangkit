@@ -1,9 +1,9 @@
 package com.littlegrow.capstone_project.model
 
 sealed class ValidationEvent {
-    object Success: ValidationEvent()
+    data object Success: ValidationEvent()
 
-    object Error: ValidationEvent()
+    data object Error: ValidationEvent()
 
-    object Loading: ValidationEvent()
+    data object Loading: ValidationEvent()
 }

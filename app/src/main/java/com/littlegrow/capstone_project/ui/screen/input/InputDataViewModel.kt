@@ -146,7 +146,7 @@ class InputDataViewModel(
         get() = _formattedDate
 
     private val _prediction = MutableStateFlow("")
-    val prediction: StateFlow<String>
+    private val prediction: StateFlow<String>
         get() = _prediction
 
 

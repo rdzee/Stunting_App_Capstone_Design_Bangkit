@@ -55,7 +55,7 @@ fun RecommendationItem(
                         .fillMaxWidth()
                 )
                 Spacer(modifier = modifier.height(16.dp))
-                LazyColumn(){
+                LazyColumn {
                     items(foodList) { data ->
                         if (data.probability != 0.0) {
                             Row(

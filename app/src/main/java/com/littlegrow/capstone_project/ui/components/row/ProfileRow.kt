@@ -56,10 +56,10 @@ fun ProfileRow(
                     onClick = navigateToAdd
                 )
             } else {
-                if (profileList[page].jenisKelamin == "Laki") {
-                    gender = stringResource(id = R.string.male)
+                gender = if (profileList[page].jenisKelamin == "Laki") {
+                    stringResource(id = R.string.male)
                 } else {
-                    gender = stringResource(id = R.string.female)
+                    stringResource(id = R.string.female)
                 }
                 ProfileItem(
                     name = profileList[page].namaAnak,

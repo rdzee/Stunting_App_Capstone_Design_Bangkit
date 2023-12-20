@@ -167,7 +167,6 @@ fun RecommendationContent(
                 .padding(it)
                 .fillMaxSize()
         ) {
-            Log.v("Recom", name)
             ProfileItem(
                 name = name,
                 gender = gender,
@@ -180,7 +179,7 @@ fun RecommendationContent(
             Spacer(modifier = Modifier.padding(16.dp))
             RecommendationItem(
                 foodList = foodList,
-                loading = false,
+                loading = loading,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
             )
