@@ -1,5 +1,15 @@
 # Little Grow - Mobile Development
 
+Team Members:
+1. (ML) M120BSX0602 – Miranda Sekar Ayu Shaumi – Institut Teknologi Telkom Purwokerto
+2. (ML) M120BSX0603 – Yuyun Khanafiyah – Institut Teknologi Telkom Purwokerto
+3. (ML) M409BSY0042 – Gerson Manuel Sugianto – Sekolah Tinggi Ilmu Komputer Yos Sudarso
+4. (CC)  C283BSX3552 – Annisa Fitria Nurdina – Universitas Negeri Semarang
+5. (CC) C120BSX4342 – Daniya Auly Yasmin – Institut Teknologi Telkom Purwokerto
+6. (MD) A229BSY2038 – Arsil Kultura Anzil – Universitas Jenderal Soedirman
+7. (MD) A172BSY2856 – Kevin Frederick Yapiter – Universitas Mikroskil
+
+
 Themes: Human Healthcare and Living Wellbeings
 
 Abstract: Our project focuses on addressing the problem of stunting through an innovative mobile application. Stunting, a serious health problem that affects children's growth and development, requires targeted interventions. Our research aims to explore the effectiveness of technology-based approaches in combating stunting. This app will provide good nutritional information and growth tracking. The information or research we get is on the website https://stunting.go.id/. Recognizing the critical need to combat the long-term impact of stunting on children's well-being, our team is motivated to leverage technology to provide broad and accessible solutions, aimed at making a meaningful impact on children's health.
