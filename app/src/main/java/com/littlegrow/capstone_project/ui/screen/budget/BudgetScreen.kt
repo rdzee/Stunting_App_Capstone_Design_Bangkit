@@ -35,7 +35,8 @@ fun BudgetScreen(
                 title = {
                     Text(
                         text = stringResource(id = R.string.budget_screen),
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
                     )
                 },
                 navigationIcon = {
@@ -63,6 +64,7 @@ fun BudgetScreen(
             Text(
                 text = stringResource(id = R.string.coming_soon),
                 style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .align(Alignment.Center)
             )

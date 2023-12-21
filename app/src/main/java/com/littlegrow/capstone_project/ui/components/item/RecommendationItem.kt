@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +37,8 @@ fun RecommendationItem(
     modifier: Modifier = Modifier
 ) {
     Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
+        elevation = CardDefaults.cardElevation(defaultElevation = 15.dp),
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
             .heightIn(min = 200.dp)
@@ -50,6 +54,7 @@ fun RecommendationItem(
                 Text(
                     text = stringResource(id = R.string.recommendation),
                     textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -76,6 +81,7 @@ fun RecommendationItem(
 
             if (loading) {
                 CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .align(Alignment.Center)
                 )

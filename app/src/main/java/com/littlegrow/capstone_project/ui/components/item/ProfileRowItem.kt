@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowForwardIos
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +26,8 @@ fun ProfileRowItem(
     modifier: Modifier = Modifier
 ) {
     Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
         modifier = modifier
             .fillMaxWidth()
             .height(65.dp)
@@ -38,6 +41,7 @@ fun ProfileRowItem(
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .constrainAs(nameRef) {
                         start.linkTo(parent.start, 16.dp)
@@ -55,7 +59,8 @@ fun ProfileRowItem(
                 listDescription.mapIndexed { index, descItem ->
                     Text(
                         text = "${descItem}${if (index != listDescription.lastIndex) " | " else ""}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
@@ -63,6 +68,7 @@ fun ProfileRowItem(
             Icon(
                 imageVector = Icons.Outlined.ArrowForwardIos,
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .constrainAs(iconRef) {
                         end.linkTo(parent.end, 16.dp)

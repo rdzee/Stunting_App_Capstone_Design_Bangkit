@@ -288,7 +288,8 @@ fun DetailContent(
                 title = {
                     Text(
                         text = stringResource(id = R.string.detail_profile),
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
                     )
                 },
                 navigationIcon = {

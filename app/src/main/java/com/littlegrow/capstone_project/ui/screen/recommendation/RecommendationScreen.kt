@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -144,7 +145,8 @@ fun RecommendationContent(
                 title = {
                     Text(
                         text = stringResource(id = R.string.recommendation),
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
                     )
                 },
                 navigationIcon = {
@@ -154,6 +156,7 @@ fun RecommendationContent(
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = stringResource(id = R.string.back),
+                            tint = Color.White,
                             modifier = Modifier
                                 .size(32.dp)
                         )
@@ -167,6 +170,7 @@ fun RecommendationContent(
                 .padding(it)
                 .fillMaxSize()
         ) {
+            Spacer(modifier.padding(16.dp))
             ProfileItem(
                 name = name,
                 gender = gender,

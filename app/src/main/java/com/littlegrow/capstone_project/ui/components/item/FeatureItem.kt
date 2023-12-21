@@ -50,7 +50,7 @@ fun FeatureItem(
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
             maxLines = 2,
-            color = MaterialTheme.colorScheme.surface,
+            color = MaterialTheme.colorScheme.primary,
             modifier = modifier.padding(top = 0.dp, start = 16.dp, bottom = 8.dp, end = 16.dp)
         )
     }

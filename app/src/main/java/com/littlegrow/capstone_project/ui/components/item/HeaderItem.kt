@@ -35,8 +35,8 @@ fun HeaderItem(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = modifier.background(MaterialTheme.colorScheme.primary)
-            .height(50.dp)
+        modifier = modifier.background(MaterialTheme.colorScheme.surface)
+            .height(58.dp)
             .fillMaxWidth()
     ) {
         Icon(
